@@ -321,4 +321,41 @@ router.post('/order', async (req, res) => {
   }
 })
 
+router.get('/order', async (req, res) => {
+  try {
+    const response = await OrderModel.find({})
+    res.json(response)
+  } catch (err) {
+    res.json(err)
+  }
+})
+
+router.get('/order/:userId', async (req, res) => {
+  try {
+    const { userId } = req.params
+    const response = await OrderModel.find({ userId })
+    res.json(response)
+  } catch (err) {
+    res.json(err)
+  }
+})
+
+router.put('/order/:id', async (req, res) => {
+  try {
+    const orderId = req.params.id
+    const { status } = req.body
+
+    const updatedOrder = await OrderModel.findByIdAndUpdate(
+      orderId,
+      { $set: { status } },
+      { new: true }
+    )
+
+    res.status(200).json({ message: 'Order updated', order: updatedOrder })
+  } catch (err) {
+    console.error(err)
+    res.status(500).json({ message: 'Server error' })
+  }
+})
+
 export { router as productRouter }

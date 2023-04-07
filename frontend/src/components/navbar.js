@@ -13,7 +13,7 @@ export const Navbar = () => {
     window.localStorage.removeItem('sessionToken')
     window.localStorage.removeItem('username')
     window.localStorage.removeItem('cartID')
-    navigate('/auth')
+    navigate('/login')
   }
 
   let isAdmin = false
@@ -43,8 +43,9 @@ export const Navbar = () => {
       {isAdmin && <Link to="/add"> AddProduct</Link>}
       <Link to="/shop"> Shop</Link>
       {(isAdmin || isUser) && <Link to="/cart"> Cart</Link>}
+      {(isAdmin || isUser) && <Link to="/dashboard"> Dashboard</Link>}
       {!cookies.access_token ? (
-        <Link to="/auth"> Login/Register</Link>
+        <Link to="/login"> Login</Link>
       ) : (
         <button onClick={logout}>Logout</button>
       )}
