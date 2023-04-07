@@ -9,7 +9,7 @@ Steps to Install and Run:
 4. Create a database on MongoDB account.
 
 5. Create this parameters on the .env file:
-      TEST_DB_URI=mongodb+srv://<username>:<password>@cluster0.ae0aurl.mongodb.net/<database>?retryWrites=true&w=majority
+      TEST_DB_URI=mongodb+srv://username:password@cluster0.ae0aurl.mongodb.net/database?retryWrites=true&w=majority
       PORT = 5000
                               -replace username, password and database with your own
 6. To run the Backend Server, open the terminal on the Backend folder and type "npm start".
