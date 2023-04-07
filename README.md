@@ -2,7 +2,7 @@ Steps to Install and Run:
 
 1. Open Terminal on Frontend folder directory and type "npm install" to install all dependencies.
 
-2. Open Terminal on Backend fodler directory and type "npm install" to install all dependencies.
+2. Open Terminal on Backend folder directory and type "npm install" to install all dependencies.
 
 3. Create a .env file on the Backend Folder.
 
