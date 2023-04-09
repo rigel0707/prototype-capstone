@@ -20,8 +20,14 @@ app.use(bodyParser.json())
 app.use('/auth', userRouter)
 app.use('/products', productRouter)
 
+app.get('/', (req, res) => {
+  const imageUrl =
+    'https://drive.google.com/uc?export=view&id=1pyin8PDJyMW24f3h7CBzXbRmovtrcLs_'
+  res.send(`<img src="${imageUrl}" height="480" alt="anyaaaaa" />`)
+})
+
 mongoose.connect(uri)
 
 app.listen(port, () => {
-    console.log(`Server is running on port: ${port}`)
+  console.log(`Server is running on port: ${port}`)
 })
