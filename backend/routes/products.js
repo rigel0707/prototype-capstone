@@ -358,4 +358,55 @@ router.put('/order/:id', async (req, res) => {
   }
 })
 
+const orderNum = [
+  {
+    $group: {
+      _id: '$userId',
+      orders: {
+        $push: '$$ROOT',
+      },
+    },
+  },
+  {
+    $project: {
+      _id: 1,
+      numOrders: {
+        $size: '$orders',
+      },
+    },
+  },
+  {
+    $lookup: {
+      from: 'orders',
+      localField: '_id',
+      foreignField: 'userId',
+      as: 'orders',
+    },
+  },
+  {
+    $addFields: {
+      numOrders: {
+        $size: '$orders',
+      },
+    },
+  },
+  {
+    $set: {
+      numOrders: {
+        $size: '$orders',
+      },
+    },
+  },
+]
+
+router.get('/users/orders', async (req, res) => {
+  try {
+    const ordersByUser = await OrderModel.aggregate(orderNum)
+    res.status(200).json(ordersByUser)
+  } catch (err) {
+    console.error(err)
+    res.status(500).json({ message: 'Server error' })
+  }
+})
+
 export { router as productRouter }

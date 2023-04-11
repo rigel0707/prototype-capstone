@@ -62,7 +62,7 @@ router.post('/login', async (req, res) => {
       token,
       userID: user._id,
       username: user.username,
-      // cartID: cart ? cart._id : null,
+      cartID: cart ? cart._id : null,
     })
   }
 
@@ -72,7 +72,7 @@ router.post('/login', async (req, res) => {
       token,
       userID: user._id,
       username: user.username,
-      // cartID: cart ? cart._id : null,
+      cartID: cart ? cart._id : null,
     })
   }
 })
@@ -81,6 +81,19 @@ router.get('/users', async (req, res) => {
   try {
     const users = await UserModel.find()
     res.json(users)
+  } catch (err) {
+    console.error(err)
+    res.status(500).send('Server Error')
+  }
+})
+
+router.get('/users/:id', async (req, res) => {
+  try {
+    const user = await UserModel.findById(req.params.id)
+    if (!user) {
+      return res.status(404).json({ msg: 'User not found' })
+    }
+    res.json(user)
   } catch (err) {
     console.error(err)
     res.status(500).send('Server Error')

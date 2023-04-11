@@ -6,7 +6,6 @@ import { useGetUserID } from '../hooks/useGetUserID.js'
 export const Shop = () => {
   return (
     <>
-      <h1>Shop</h1>
       <ProductTable />
     </>
   )
@@ -56,38 +55,96 @@ const ProductTable = () => {
 
     return (
       <>
-        <button onClick={handleClick}>Add to Cart</button>
+        <button className="btn btn-dark" onClick={handleClick}>
+          Add to Cart
+        </button>
         <p>{message}</p>
       </>
     )
   }
 
   return (
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Description</th>
-          <th>Image</th>
-          <th>Price</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        {product.map((product) => (
-          <tr key={product._id}>
-            <td>{product.name}</td>
-            <td>{product.description}</td>
-            <td>
-              <img src={product.imageURL} alt={product.name} />
-            </td>
-            <td>{product.price}</td>
-            <td>
-              <AddToCartButton productId={product._id} userId={userId} />
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
+    <>
+      <div className="row g-3 mb-4">
+        <div className="col-auto">
+          <h2 className="mt-3 mb-0">SHOP</h2>
+        </div>
+      </div>
+      <div className="container mx-n4 px-4 mx-lg-n6 px-lg-6 bg-white border-top border-bottom border-200 position-relative top-1">
+        <div className="table-responsive scrollbar mx-n1 px-1">
+          <table className="table fs--1 mb-0">
+            <thead>
+              <tr>
+                <th
+                  className="sort white-space-nowrap align-middle fs--2"
+                  scope="col"
+                  style={{ width: '70px' }}
+                ></th>
+                <th
+                  className="sort white-space-nowrap align-middle ps-4"
+                  scope="col"
+                  style={{ width: '350px' }}
+                  data-sort="product"
+                >
+                  PRODUCT NAME
+                </th>
+                <th
+                  className="sort align-middle ps-4"
+                  scope="col"
+                  data-sort="price"
+                  style={{ width: '150px' }}
+                >
+                  DESCRIPTION
+                </th>
+                <th
+                  className="sort align-middle fs-0 text-center ps-4"
+                  scope="col"
+                  style={{ width: '125px' }}
+                ></th>
+                <th
+                  className="sort align-middle ps-4"
+                  scope="col"
+                  data-sort="vendor"
+                  style={{ width: '200px' }}
+                >
+                  PRICE
+                </th>
+                <th
+                  className="sort align-middle fs-0 text-center ps-4"
+                  scope="col"
+                  style={{ width: '125px' }}
+                ></th>
+              </tr>
+            </thead>
+            <tbody className="list" id="products-table-body">
+              {product.map((product) => (
+                <tr className="position-static" key={product._id}>
+                  <td className="align-middle white-space-nowrap py-0">
+                    <div className="border rounded-2">
+                      <img src={product.imageURL} alt={product.name} />
+                    </div>
+                  </td>
+                  <td className="product align-middle ps-4">{product.name}</td>
+                  <td className="price align-middle white-space-nowrap fw-bold text-700 ps-4">
+                    {product.description}
+                  </td>
+                  <th
+                    className="sort align-middle fs-0 text-center ps-4"
+                    scope="col"
+                    style={{ width: '125px' }}
+                  ></th>
+                  <td className="price align-middle white-space-nowrap fw-bold text-700 ps-4">
+                    {product.price}
+                  </td>
+                  <td className="price align-middle white-space-nowrap fw-bold text-700 ps-4">
+                    <AddToCartButton productId={product._id} userId={userId} />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </>
   )
 }

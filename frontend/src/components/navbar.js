@@ -13,6 +13,7 @@ export const Navbar = () => {
     window.localStorage.removeItem('sessionToken')
     window.localStorage.removeItem('username')
     window.localStorage.removeItem('cartID')
+    window.localStorage.removeItem('cartItems')
     navigate('/login')
   }
 
@@ -39,11 +40,35 @@ export const Navbar = () => {
   return (
     <div className="navbar">
       <Link to="/"> Home</Link>
-      {isAdmin && <Link to="/admin"> Admin Dashboard</Link>}
       {isAdmin && <Link to="/add"> AddProduct</Link>}
       <Link to="/shop"> Shop</Link>
       {(isAdmin || isUser) && <Link to="/cart"> Cart</Link>}
-      {(isAdmin || isUser) && <Link to="/dashboard"> Dashboard</Link>}
+      {isUser && <Link to="/dashboard"> Dashboard</Link>}
+      {isAdmin && (
+        <li className="nav-item dropdown">
+          <a
+            className="nav-link dropdown-toggle"
+            href="#"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Dashboard
+          </a>
+          <ul className="dropdown-menu">
+            <li>
+              <Link className="dropdown-item" to="/dashboard">
+                User
+              </Link>
+            </li>
+            <li>
+              <Link className="dropdown-item" to="/admin">
+                Admin
+              </Link>
+            </li>
+          </ul>
+        </li>
+      )}
       {!cookies.access_token ? (
         <Link to="/login"> Login</Link>
       ) : (

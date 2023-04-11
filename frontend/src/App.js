@@ -1,5 +1,6 @@
 import './App.css'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import 'bootstrap/dist/css/bootstrap.css'
 import { Home } from './pages/home'
 import { LoginPage } from './pages/login'
 import { AddProduct } from './pages/add-product'

@@ -32,7 +32,7 @@ const Login = () => {
         window.localStorage.setItem('userID', response.data.userID)
         window.localStorage.setItem('username', response.data.username)
         window.localStorage.setItem('sessionToken', response.data.token)
-        // window.localStorage.setItem('cartID', response.data.cartID)
+        await window.localStorage.setItem('cartID', response.data.cartID)
         navigate('/')
       }
     } catch (err) {
@@ -69,8 +69,11 @@ const Form = ({
       <form onSubmit={onSubmit}>
         <h2>{label}</h2>
         <div className="form-group">
-          <label htmlFor="username"> Username: </label>
+          <label className="form-label" htmlFor="username">
+            Username:
+          </label>
           <input
+            className="form-control"
             type="text"
             id="username"
             value={username}
@@ -78,8 +81,11 @@ const Form = ({
           />
         </div>
         <div className="form-group">
-          <label htmlFor="password"> Password: </label>
+          <label className="form-label" htmlFor="password">
+            Password:
+          </label>
           <input
+            className="form-control"
             type="password"
             id="password"
             value={password}

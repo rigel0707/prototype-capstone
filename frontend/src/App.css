@@ -87,7 +87,7 @@ a {
   display: flex;
   flex-direction: column;
 }
-ul {
+/* ul {
   list-style: none;
   padding: 0;
   margin: 0;
@@ -97,20 +97,16 @@ li {
   border: 1px solid black;
   padding: 10px;
   margin-bottom: 10px;
-}
+} */
 
 h2 {
   margin-top: 0;
 }
 
 img {
-  max-width: 100%;
   height: auto;
   margin-bottom: 10px;
-}
-
-img {
-  width: 400px;
+  width: 110px;
 }
 
 p {
