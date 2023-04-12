@@ -100,4 +100,30 @@ router.get('/users/:id', async (req, res) => {
   }
 })
 
+router.put('/users/:id', async (req, res) => {
+  try {
+    const { id } = req.params
+    const user = await UserModel.findById(id)
+    if (!user) {
+      return res.status(404).send('User not found')
+    }
+
+    const { firstName, lastName, address, phone, email } = JSON.parse(
+      JSON.stringify(req.body)
+    )
+
+    user.firstName = firstName || user.firstName
+    user.lastName = lastName || user.lastName
+    user.address = address || user.address
+    user.phone = phone || user.phone
+    user.email = email || user.email
+
+    const updatedUser = await user.save()
+    res.json(updatedUser)
+  } catch (err) {
+    console.error(err)
+    res.status(500).send('Server Error')
+  }
+})
+
 export { router as userRouter }
