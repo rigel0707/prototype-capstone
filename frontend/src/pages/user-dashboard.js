@@ -263,6 +263,10 @@ const EditButton = ({ userId }) => {
     setEditFormData({ ...editFormData, [e.target.name]: e.target.value })
   }
 
+  function handleRefresh(event) {
+    window.location.reload()
+  }
+
   return (
     <div>
       <button onClick={() => setShowEditModal(true)}>Edit</button>
@@ -322,7 +326,7 @@ const EditButton = ({ userId }) => {
               />
             </Form.Group>
 
-            <Button variant="primary" type="submit">
+            <Button variant="primary" type="submit" onClick={handleRefresh}>
               Submit
             </Button>
           </Form>

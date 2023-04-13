@@ -104,6 +104,14 @@ export const Navbar = () => {
                     </Link>
                   )}
                 </li>
+                <li className="nav-item">
+                  {isAdmin && (
+                    <Link to="/add" onClick={navlinkClick}>
+                      AddProduct
+                    </Link>
+                  )}
+                </li>
+
                 {isAdmin && (
                   <li className="nav-item dropdown">
                     <button

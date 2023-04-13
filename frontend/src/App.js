@@ -6,6 +6,7 @@ import { LoginPage } from './pages/login'
 import { AddProduct } from './pages/add-product'
 import { Cart } from './pages/cart'
 import { Navbar } from './components/navbar'
+import { Footer } from './components/footer'
 import { AdminDashboard } from './pages/admin-dashboard'
 import { Shop } from './pages/shop'
 import { Checkout } from './pages/checkout'
@@ -30,6 +31,7 @@ function App() {
           <Route path="/order" element={<Order />} />
           <Route path="/register" element={<RegisterPage />} />
         </Routes>
+        <Footer />
       </Router>
     </div>
   )

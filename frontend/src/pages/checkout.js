@@ -46,6 +46,8 @@ export const Checkout = () => {
           status: 'pending',
         }
       )
+      const orderId = response.data.order._id
+      window.localStorage.setItem('orderId', orderId)
       navigate('/order')
       console.log(response)
     } catch (error) {
