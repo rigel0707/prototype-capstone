@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Button, Modal, Form } from 'react-bootstrap'
+import { useNavigate } from 'react-router-dom'
+import { useCookies } from 'react-cookie'
 import axios from 'axios'
 import { useGetUserID } from '../hooks/useGetUserID'
 import apiUrl from '../components/apiUrl'
@@ -163,6 +165,7 @@ const UserProfile = ({ userId }) => {
       <div className="container row g-3 mt-3 mb-6 mx-3">
         <h2 className="mt-3 mb-5">Profile</h2>
         <EditButton userId={userId} />
+        <DeleteAccountButton userId={userId} />
         <div className="container mt-2 col-8">
           <div className="card h-100">
             <div className="card-body">
@@ -263,9 +266,15 @@ const EditButton = ({ userId }) => {
     setEditFormData({ ...editFormData, [e.target.name]: e.target.value })
   }
 
+  function handleRefresh(event) {
+    window.location.reload()
+  }
+
   return (
     <div>
-      <button onClick={() => setShowEditModal(true)}>Edit</button>
+      <button className="btn btn-info" onClick={() => setShowEditModal(true)}>
+        Edit
+      </button>
       <Modal show={showEditModal} onHide={() => setShowEditModal(false)}>
         <Modal.Header closeButton>
           <Modal.Title>Edit Profile</Modal.Title>
@@ -322,12 +331,77 @@ const EditButton = ({ userId }) => {
               />
             </Form.Group>
 
-            <Button variant="primary" type="submit">
+            <Button variant="primary" type="submit" onClick={handleRefresh}>
               Submit
             </Button>
           </Form>
         </Modal.Body>
       </Modal>
     </div>
+  )
+}
+
+const DeleteAccountButton = ({ userId }) => {
+  const [cookies, setCookies] = useCookies(['access_token'])
+  const [showConfirmation, setShowConfirmation] = useState(false)
+
+  const navigate = useNavigate()
+
+  const handleDeleteAccount = async () => {
+    try {
+      await axios.delete(`http://localhost:5000/auth/users/${userId}`)
+      setShowConfirmation(false)
+      logout()
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  const handleCancel = () => {
+    setShowConfirmation(false)
+  }
+
+  const handleConfirmation = () => {
+    setShowConfirmation(true)
+  }
+
+  const logout = () => {
+    setCookies('access_token', '')
+    window.localStorage.removeItem('userID')
+    window.localStorage.removeItem('sessionToken')
+    window.localStorage.removeItem('username')
+    window.localStorage.removeItem('cartID')
+    window.localStorage.removeItem('cartItems')
+    navigate('/')
+  }
+
+  return (
+    <>
+      <div>
+        <Button variant="danger" onClick={handleConfirmation}>
+          Delete Account
+        </Button>
+        <Modal
+          show={showConfirmation}
+          onHide={() => setShowConfirmation(false)}
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>Confirm Account Deletion</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            Are you sure you want to delete your account? This action cannot be
+            undone.
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleCancel}>
+              Cancel
+            </Button>
+            <Button variant="danger" onClick={handleDeleteAccount}>
+              Delete Account
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      </div>
+    </>
   )
 }

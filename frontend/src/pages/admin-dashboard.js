@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { Button, Modal, Form } from 'react-bootstrap'
 import axios from 'axios'
 
 export const AdminDashboard = () => {
@@ -184,11 +185,318 @@ const ProductTable = () => {
     fetchData()
   }, [])
 
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`http://localhost:5000/products/${id}`)
+      setProducts((prevProducts) =>
+        prevProducts.filter((product) => product._id !== id)
+      )
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  const handleProductUpdate = (updatedProduct) => {
+    const updatedProducts = product.map((product) => {
+      if (product._id === updatedProduct._id) {
+        return updatedProduct
+      }
+      return product
+    })
+    setProducts(updatedProducts)
+  }
+
+  const AddProductModal = () => {
+    const [isOpen, setIsOpen] = useState(false)
+    const [product, setProduct] = useState({
+      name: '',
+      description: '',
+      imageURL: '',
+      price: 0,
+    })
+
+    const handleChange = (event) => {
+      const { name, value } = event.target
+      setProduct({ ...product, [name]: value })
+    }
+
+    const handleOpen = () => {
+      setIsOpen(true)
+    }
+
+    const handleClose = () => {
+      setIsOpen(false)
+    }
+
+    const onSubmit = async (event) => {
+      event.preventDefault()
+      try {
+        await axios.post('http://localhost:5000/products', product)
+        alert('Product Added!')
+        setProducts((prevProducts) => [...prevProducts, product])
+        setIsOpen(false)
+      } catch (err) {
+        console.error(err)
+      }
+    }
+
+    return (
+      <>
+        <Button onClick={() => handleOpen()}>Add Product</Button>
+
+        <Modal show={isOpen} onHide={handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>Add Product</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Form onSubmit={onSubmit}>
+              <Form.Group>
+                <Form.Label>Name</Form.Label>
+                <Form.Control type="text" name="name" onChange={handleChange} />
+              </Form.Group>
+              <Form.Group>
+                <Form.Label>Description</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="description"
+                  onChange={handleChange}
+                />
+              </Form.Group>
+              <Form.Group>
+                <Form.Label>Image URL</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="imageURL"
+                  onChange={handleChange}
+                />
+              </Form.Group>
+              <Form.Group>
+                <Form.Label>Price</Form.Label>
+                <Form.Control
+                  type="number"
+                  name="price"
+                  onChange={handleChange}
+                />
+              </Form.Group>
+              <Button variant="primary" type="submit">
+                Add Product
+              </Button>
+            </Form>
+          </Modal.Body>
+        </Modal>
+      </>
+    )
+  }
+
+  // const EditProductModal = ({ id, onClose }) => {
+  //   const [isOpen, setIsOpen] = useState(true)
+  //   const [product, setProduct] = useState(null)
+
+  //   useEffect(() => {
+  //     const getProduct = async () => {
+  //       try {
+  //         const response = await axios.get(
+  //           `http://localhost:5000/products/prod/${id}`
+  //         )
+  //         setProduct(response.data)
+  //       } catch (err) {
+  //         console.error(err)
+  //       }
+  //     }
+  //     getProduct()
+  //   }, [id])
+
+  //   const handleChange = (event) => {
+  //     const { name, value } = event.target
+  //     setProduct((prevProduct) => ({ ...prevProduct, [name]: value }))
+  //   }
+
+  //   const handleSubmit = async (event) => {
+  //     event.preventDefault()
+  //     try {
+  //       await axios.put(`http://localhost:5000/products/${id}`, product)
+  //       alert('Product Updated!')
+  //       onClose()
+  //     } catch (err) {
+  //       console.error(err)
+  //     }
+  //   }
+
+  //   const handleClose = () => {
+  //     setIsOpen(false)
+  //     onClose()
+  //   }
+
+  //   if (!product) {
+  //     return null
+  //   }
+
+  //   return (
+  //     <>
+  //       <Button onClick={() => setIsOpen(true)}>Edit Product</Button>
+
+  //       <Modal show={isOpen} onHide={handleClose}>
+  //         <Modal.Header closeButton>
+  //           <Modal.Title>Edit Product</Modal.Title>
+  //         </Modal.Header>
+  //         <Modal.Body>
+  //           <Form onSubmit={handleSubmit}>
+  //             <Form.Group>
+  //               <Form.Label>Name</Form.Label>
+  //               <Form.Control
+  //                 type="text"
+  //                 name="name"
+  //                 value={product.name}
+  //                 onChange={handleChange}
+  //               />
+  //             </Form.Group>
+  //             <Form.Group>
+  //               <Form.Label>Description</Form.Label>
+  //               <Form.Control
+  //                 type="text"
+  //                 name="description"
+  //                 value={product.description}
+  //                 onChange={handleChange}
+  //               />
+  //             </Form.Group>
+  //             <Form.Group>
+  //               <Form.Label>Image URL</Form.Label>
+  //               <Form.Control
+  //                 type="text"
+  //                 name="imageURL"
+  //                 value={product.imageURL}
+  //                 onChange={handleChange}
+  //               />
+  //             </Form.Group>
+  //             <Form.Group>
+  //               <Form.Label>Price</Form.Label>
+  //               <Form.Control
+  //                 type="number"
+  //                 name="price"
+  //                 value={product.price}
+  //                 onChange={handleChange}
+  //               />
+  //             </Form.Group>
+  //             <Button variant="primary" type="submit">
+  //               Update Product
+  //             </Button>
+  //           </Form>
+  //         </Modal.Body>
+  //       </Modal>
+  //     </>
+  //   )
+  // }
+
+  const EditProductModal = ({ productId, onUpdate }) => {
+    const [showEditModal, setShowEditModal] = useState(false)
+    const [editFormData, setEditFormData] = useState({})
+
+    useEffect(() => {
+      const fetchData = async () => {
+        try {
+          const response = await axios.get(
+            `http://localhost:5000/products/items/${productId}`
+          )
+          setEditFormData(response.data)
+        } catch (err) {
+          console.error(err)
+        }
+      }
+      fetchData()
+    }, [productId])
+
+    const handleEditFormSubmit = async (e) => {
+      e.preventDefault()
+      try {
+        const response = await axios.put(
+          `http://localhost:5000/products/${productId}`,
+          editFormData
+        )
+
+        setShowEditModal(false)
+        onUpdate(response.data)
+      } catch (err) {
+        console.error(err)
+      }
+    }
+
+    const handleFormChange = (e) => {
+      setEditFormData({ ...editFormData, [e.target.name]: e.target.value })
+    }
+
+    return (
+      <div>
+        <button
+          className="btn btn-warning"
+          onClick={() => setShowEditModal(true)}
+        >
+          Edit
+        </button>
+        <Modal show={showEditModal} onHide={() => setShowEditModal(false)}>
+          <Modal.Header closeButton>
+            <Modal.Title>Edit Product</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Form onSubmit={handleEditFormSubmit}>
+              <Form.Group controlId="formBasicName">
+                <Form.Label>Name</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="name"
+                  value={editFormData.name || ''}
+                  onChange={handleFormChange}
+                />
+              </Form.Group>
+
+              <Form.Group controlId="formBasicDescription">
+                <Form.Label>Description</Form.Label>
+                <Form.Control
+                  as="textarea"
+                  rows={3}
+                  name="description"
+                  value={editFormData.description || ''}
+                  onChange={handleFormChange}
+                />
+              </Form.Group>
+
+              <Form.Group controlId="formBasicPrice">
+                <Form.Label>Price</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="price"
+                  value={editFormData.price || ''}
+                  onChange={handleFormChange}
+                />
+              </Form.Group>
+
+              <Form.Group controlId="formBasicImage">
+                <Form.Label>Image URL</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="image"
+                  value={editFormData.imageURL || ''}
+                  onChange={handleFormChange}
+                />
+              </Form.Group>
+
+              <Button variant="primary" type="submit">
+                Submit
+              </Button>
+            </Form>
+          </Modal.Body>
+        </Modal>
+      </div>
+    )
+  }
+
   return (
     <>
       <div className="row g-3 mb-4">
         <div className="col-auto">
           <h2 className="mb-0">Products</h2>
+          <div className="container">
+            <AddProductModal />
+          </div>
         </div>
       </div>
       <div className="container mx-n4 px-4 mx-lg-n6 px-lg-6 bg-white border-top border-bottom border-200 position-relative top-1">
@@ -250,7 +558,19 @@ const ProductTable = () => {
                     style={{ width: '125px' }}
                   ></th>
                   <td className="price align-middle white-space-nowrap fw-bold text-700 ps-4">
-                    {product.price}
+                    PHP {product.price}
+                  </td>
+                  <td>
+                    <button
+                      className="btn btn-danger"
+                      onClick={() => handleDelete(product._id)}
+                    >
+                      Delete
+                    </button>
+                    <EditProductModal
+                      productId={product._id}
+                      onUpdate={handleProductUpdate}
+                    />
                   </td>
                 </tr>
               ))}
@@ -320,43 +640,6 @@ const OrderTable = () => {
   }
 
   return (
-    // <table>
-    //   <thead>
-    //     <tr>
-    //       <th>Order ID</th>
-    //       <th>Ordered Items</th>
-    //       <th>Status</th>
-    //       <th>Change Status</th>
-    //     </tr>
-    //   </thead>
-    //   <tbody>
-    //     {orders.map((order) => (
-    //       <tr key={order._id}>
-    //         <td>{order.name}</td>
-    //         <td>
-    //           <table>
-    //             <thead>
-    //               <tr>
-    //                 <th>Product Name</th>
-    //                 <th>Price</th>
-    //               </tr>
-    //             </thead>
-    //             <tbody>
-    //               {order.cartItems.map((item) => (
-    //                 <tr key={item._id}>
-    //                   <td>{item.productName}</td>
-    //                   <td>{item.price}</td>
-    //                 </tr>
-    //               ))}
-    //             </tbody>
-    //           </table>
-    //         </td>
-    //         <td>{order.status}</td>
-    //         <td>{renderStatusDropdown(order)}</td>
-    //       </tr>
-    //     ))}
-    //   </tbody>
-    // </table>
     <>
       <div className="row g-3 mb-4">
         <div className="col-auto">
@@ -450,98 +733,3 @@ const OrderTable = () => {
     </>
   )
 }
-
-// const OrderTable = () => {
-//   const [orders, setOrders] = useState([])
-
-//   useEffect(() => {
-//     async function fetchData() {
-//       try {
-//         const response = await axios.get('http://localhost:5000/products/order')
-//         setOrders(response.data)
-//       } catch (err) {
-//         console.error(err)
-//       }
-//     }
-
-//     fetchData()
-//   }, [])
-
-//   const RenderStatusDropdown = (order) => {
-//     const [localStatus, setLocalStatus] = useState(order.status)
-
-//     const handleStatusChange = async (orderId, newStatus) => {
-//       try {
-//         const response = await axios.put(
-//           `http://localhost:5000/products/order/${orderId}`,
-//           { status: newStatus }
-//         )
-//         if (response.status === 200) {
-//           setLocalStatus(newStatus)
-
-//           const updatedOrders = orders.map((order) =>
-//             order._id === orderId ? { ...order, status: newStatus } : order
-//           )
-//           setOrders(updatedOrders)
-//         }
-//       } catch (err) {
-//         console.error(err)
-//       }
-//     }
-
-//     return (
-//       <div>
-//         <select
-//           value={localStatus}
-//           onChange={(e) => handleStatusChange(order._id, e.target.value)}
-//         >
-//           <option value="">Select a status</option>
-//           <option value="Packing Items">Packing Items</option>
-//           <option value="In Shipment">In Shipment</option>
-//           <option value="Delivered">Delivered</option>
-//           <option value="Cancelled">Cancelled</option>
-//         </select>
-//       </div>
-//     )
-//   }
-
-//   return (
-//     <table>
-//       <thead>
-//         <tr>
-//           <th>Order ID</th>
-//           <th>Ordered Items</th>
-//           <th>Status</th>
-//           <th>Change Status</th>
-//         </tr>
-//       </thead>
-//       <tbody>
-//         {orders.map((order) => (
-//           <tr key={order._id}>
-//             <td>{order._id}</td>
-//             <td>
-//               <table>
-//                 <thead>
-//                   <tr>
-//                     <th>Product Name</th>
-//                     <th>Price</th>
-//                   </tr>
-//                 </thead>
-//                 <tbody>
-//                   {order.cartItems.map((item) => (
-//                     <tr key={item._id}>
-//                       <td>{item.productName}</td>
-//                       <td>{item.price}</td>
-//                     </tr>
-//                   ))}
-//                 </tbody>
-//               </table>
-//             </td>
-//             <td>{order.status}</td>
-//             <td>{RenderStatusDropdown(order)}</td>
-//           </tr>
-//         ))}
-//       </tbody>
-//     </table>
-//   )
-// }
