@@ -57,47 +57,48 @@ export const Navbar = () => {
             <span className="navbar-toggler-icon"></span>
           </button>
           <a className="navbar-brand me-5" href="/">
-            <img src={logo} alt="FuzzyJARR"></img>
+            <h5 className="offcanvas-title" id="offcanvasNavbarLabel">
+              FuzzyJARR
+            </h5>
           </a>
           <div
-            className={`offcanvas offcanvas-start ${
-              showOffcanvas ? 'show' : ''
-            }`}
+            className={`offcanvas offcanvas-start ${showOffcanvas ? 'show' : ''
+              }`}
             tabIndex="-1"
             id="offcanvasNavbar"
             aria-labelledby="offcanvasNavbarLabel"
           >
-            <div className="offcanvas-header">
-              <h5 className="offcanvas-title" id="offcanvasNavbarLabel">
-                FuzzyJARR
-              </h5>
-              <button
-                type="button"
-                className="btn-close"
-                onClick={() => setShowOffcanvas(false)}
-                aria-label="Close"
-              ></button>
+            <div className="offcanvas-header row justify-content-center">
+              <div className="col-12 d-flex justify-content-end mb-5">
+                <button
+                  type="button"
+                  className="btn-close"
+                  onClick={() => setShowOffcanvas(false)}
+                  aria-label="Close"
+                ></button>
+              </div>
+              <img src={logo} className="col-6" width="150px" alt="FuzzyJARR"></img>
             </div>
             <div className="offcanvas-body" id="navbarTogglerDemo03">
-              <ul className="navbar-nav align-items-center ms-auto mb-2 mb-lg-0">
-                <li className="nav-item">
+              <ul className="navbar-nav align-items-center ms-auto mb-3 mb-lg-0">
+                <li className="nav-item mb-3">
                   <Link to="/" onClick={navlinkClick}>
                     Home
                   </Link>
                 </li>
-                <li className="nav-item">
+                <li className="nav-item mb-3">
                   <Link to="/shop" onClick={navlinkClick}>
                     Shop
                   </Link>
                 </li>
-                <li className="nav-item">
+                <li className="nav-item mb-3">
                   {(isAdmin || isUser) && (
                     <Link to="/cart" onClick={navlinkClick}>
                       Cart
                     </Link>
                   )}
                 </li>
-                <li className="nav-item">
+                <li className="nav-item mb-3">
                   {isUser && (
                     <Link to="/dashboard" onClick={navlinkClick}>
                       Dashboard
@@ -140,41 +141,41 @@ export const Navbar = () => {
                     </ul>
                   </li>
                 )}
-                <li className="nav-item">
-                  {!cookies.access_token ? (
-                    <>
-                      <button
-                        className="btn btn-primary mx-1"
-                        onClick={() => {
-                          navigate('/login')
-                          setShowOffcanvas(false)
-                        }}
-                      >
-                        Login
-                      </button>
-                      <button
-                        className="btn btn-secondary mx-1"
-                        onClick={() => {
-                          navigate('/register')
-                          setShowOffcanvas(false)
-                        }}
-                      >
-                        Register
-                      </button>
-                    </>
-                  ) : (
+              </ul>
+              <div className="d-flex justify-content-center">
+                {!cookies.access_token ? (
+                  <>
                     <button
-                      className="btn btn-primary"
+                      className="btn btn-black mx-1"
                       onClick={() => {
-                        logout()
+                        navigate('/login')
                         setShowOffcanvas(false)
                       }}
                     >
-                      Logout
+                      Login
                     </button>
-                  )}
-                </li>
-              </ul>
+                    <button
+                      className="btn btn-black mx-1"
+                      onClick={() => {
+                        navigate('/register')
+                        setShowOffcanvas(false)
+                      }}
+                    >
+                      Register
+                    </button>
+                  </>
+                ) : (
+                  <button
+                    className="btn btn-primary"
+                    onClick={() => {
+                      logout()
+                      setShowOffcanvas(false)
+                    }}
+                  >
+                    Logout
+                  </button>
+                )}
+              </div>
             </div>
           </div>
         </div>

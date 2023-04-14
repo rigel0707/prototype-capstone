@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { OverlayTrigger, Tooltip } from 'react-bootstrap'
+import apiUrl from '../components/apiUrl'
 
 import { useGetUserID } from '../hooks/useGetUserID.js'
 
@@ -18,7 +19,7 @@ const ProductTable = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await axios.get('http://localhost:5000/products')
+        const response = await axios.get(`${apiUrl}/products`)
         setProducts(response.data)
       } catch (err) {
         console.error(err)
@@ -39,7 +40,7 @@ const ProductTable = () => {
           return
         }
         const response = await axios.post(
-          'http://localhost:5000/products/cart',
+          `${apiUrl}/products/cart`,
           { productId, userId }
         )
         setMessage(response.data.message)

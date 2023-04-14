@@ -63,13 +63,6 @@ input {
   z-index: 1000;
 } */
 
-a {
-  color: white;
-  text-decoration: none;
-  margin: 10px;
-  font-size: 25px;
-}
-
 .create-recipe {
   display: flex;
   flex-direction: column;
@@ -108,28 +101,88 @@ p {
   font-size: 12px;
 }
 
+/* BUTTON */
+.btn {
+  max-width: max-content !important;
+  padding: 8px 25px !important;
+  font-weight: 700 !important;
+  font-size: 15px !important;
+  border-radius: 50px !important;
+}
+.btn-black {
+  color: white !important;
+  background-color: black !important;
+  border-radius: 50px !important;
+}
+.btn-orange {
+  background-color: rgb(240, 104, 66);
+}
+.btn-black:is(:hover, :focus) {
+  background-color: rgb(240, 104, 66) !important;
+  color: black !important;
+}
+
+/* NAVBAR */
+.navbar {
+  background-color: 
+  #e08c59 !important;
+}
+.offcanvas-title {
+  color: white;
+}
 .navbar-nav {
   width: 100%;
   justify-content: center;
 }
 
-.navbar-nav > li {
+/* .navbar-nav > li {
   margin-right: auto;
-}
+} */
 
-.navbar-nav > li:last-child {
+/* .navbar-nav > li:last-child {
   margin-left: auto;
-}
+} */
 
 .offcanvas-start {
   width: 400px;
 }
 
-.nav-item {
-  padding-top: 5px;
-  padding-bottom: 5px;
+.offcanvas-title{
+  font-family: 'Carter One', cursive;
+  font-size: 40px;
+}
+
+.navbar-nav li a {
+  color: black;
+  text-decoration: none;
+  padding: 10px;
+  margin: 0 10px;
+  border-radius: 5px;
 }
 
 .navbar-toggler {
   margin-left: 20px;
+}
+
+/* HOME */
+.banner {
+  background-size: cover;
+  height: 91vh;
+}
+.banner-text {
+  color: white;
+  margin-right: 500px;
+  margin-top: 180px;
+}
+.banner-title {
+  font-size: 160px;
+  font-family: 'Bangers', cursive;
+}
+.banner-title-span {
+  padding: 5px;
+  font-size: 60px;
+  font-family: 'Bangers', cursive;
+}
+.banner-content {
+  font-size: 28px;
 }

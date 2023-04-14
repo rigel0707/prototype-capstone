@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { useGetUserID } from '../hooks/useGetUserID'
 import { useGetCartID } from '../hooks/useGetCartID'
+import apiUrl from '../components/apiUrl'
 
 export const Cart = () => {
   const [cartItems, setCartItems] = useState([])
@@ -16,7 +17,7 @@ export const Cart = () => {
       setIsLoading(true)
       try {
         const res = await axios.get(
-          `http://localhost:5000/products/cart/${userId}`
+          `${apiUrl}/products/cart/${userId}`
         )
         const cart = res.data.cartItems
         if (cart && cart.length > 0) {

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import apiUrl from '../components/apiUrl'
 
 export const RegisterPage = () => {
   return (
@@ -24,7 +25,7 @@ const Register = () => {
   const onSubmit = async (event) => {
     event.preventDefault()
     try {
-      const response = await axios.post('http://localhost:5000/auth/register', {
+      const response = await axios.post(`${apiUrl}/auth/register`, {
         username,
         password,
         firstName,
