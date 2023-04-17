@@ -17,3 +17,6 @@ Steps to Install and Run:
 7. To run the Frontend, open the terminal on the Frontend folder and type "npm start".
 
 8. When creating an admin account, register it as a normal user first then change the role index on the users collection.
+
+
+Test Discord
