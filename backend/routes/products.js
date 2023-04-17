@@ -26,6 +26,61 @@ router.post('/', async (req, res) => {
   }
 })
 
+router.get('/items/:id', async (req, res) => {
+  try {
+    const { id } = req.params
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ error: 'Invalid id' })
+    }
+    const response = await ProductModel.findById(id)
+    if (!response) {
+      return res.status(404).json({ error: 'Product not found' })
+    }
+    res.json(response)
+  } catch (err) {
+    console.error(err)
+    res.status(500).json({ error: 'Server error' })
+  }
+})
+
+router.put('/:id', async (req, res) => {
+  try {
+    const { id } = req.params
+    const product = await ProductModel.findById(id)
+    if (!product) {
+      return res.status(404).send('Product not found')
+    }
+
+    const { name, description, imageURL, price } = JSON.parse(
+      JSON.stringify(req.body)
+    )
+
+    product.name = name || product.name
+    product.description = description || product.description
+    product.imageURL = imageURL || product.imageURL
+    product.price = price || product.price
+
+    const updatedProducts = await product.save()
+    res.json(updatedProducts)
+  } catch (err) {
+    console.error(err)
+    res.status(500).send('Server Error')
+  }
+})
+
+router.delete('/:id', async (req, res) => {
+  const { id } = req.params
+  try {
+    const deletedProduct = await ProductModel.findByIdAndDelete(id)
+    if (!deletedProduct) {
+      return res.status(404).json({ message: 'Product not found' })
+    }
+    res.json({ message: 'Product deleted successfully' })
+  } catch (err) {
+    res.status(500).json({ message: 'Server error' })
+  }
+})
+
 router.put('/', async (req, res) => {
   try {
     const product = await ProductModel.findById(req.body.productID)
@@ -46,80 +101,6 @@ router.get('/orderedProducts/id', async (req, res) => {
     res.json(err)
   }
 })
-
-// router.post('/cart', async (req, res) => {
-//   const { productId, userId } = req.body
-//   const product = await ProductModel.findById(productId)
-//   if (!product) {
-//     res.status(404).json({ message: 'Product not found' })
-//   } else {
-//     const user = await UserModel.findById(userId)
-//     if (!user) {
-//       res.status(404).json({ message: 'User not found' })
-//     } else {
-//       let cart = await CartModel.findOne({ userId })
-//       if (cart) {
-//         const item = { productId: product._id, productName: product.name }
-//         cart.cartItems.push(item)
-//         await cart.save()
-//         const pipeline = [
-//           {
-//             $match: { _id: new mongoose.Types.ObjectId(user._id) },
-//           },
-//           {
-//             $lookup: {
-//               from: 'carts',
-//               localField: 'cartId',
-//               foreignField: '_id',
-//               as: 'cart',
-//             },
-//           },
-//           {
-//             $unwind: {
-//               path: '$cart',
-//               preserveNullAndEmptyArrays: true,
-//             },
-//           },
-//         ]
-//         const userWithCart = await UserModel.aggregate(pipeline)
-//         res.json({ message: 'Product added to cart', cart: userWithCart.cart })
-//       } else {
-//         const newItem = { productId: product._id, productName: product.name }
-//         const newCart = new CartModel({
-//           userId: user._id,
-//           cartItems: [newItem],
-//         })
-//         cart = await newCart.save()
-//         user.cartId = cart._id
-//         await user.save()
-//         const pipeline = [
-//           {
-//             $match: { _id: new mongoose.Types.ObjectId(user._id) },
-//           },
-//           {
-//             $lookup: {
-//               from: 'carts',
-//               localField: 'cartId',
-//               foreignField: '_id',
-//               as: 'cart',
-//             },
-//           },
-//           {
-//             $unwind: {
-//               path: '$cart',
-//               preserveNullAndEmptyArrays: true,
-//             },
-//           },
-//         ]
-//         const userWithCart = await UserModel.aggregate(pipeline)
-//         res.json({
-//           message: 'Product added to new cart',
-//           cart: userWithCart.cart,
-//         })
-//       }
-//     }
-//   }
-// })
 
 router.post('/cart', async (req, res) => {
   const { productId, userId } = req.body
