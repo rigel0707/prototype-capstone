@@ -80,7 +80,7 @@ export const Navbar = () => {
               <img src={logo} className="col-6" width="150px" alt="FuzzyJARR"></img>
             </div>
             <div className="offcanvas-body" id="navbarTogglerDemo03">
-              <ul className="navbar-nav align-items-center ms-auto mb-3 mb-lg-0">
+              <ul className="navbar-nav align-items-center ms-auto mb-3 mb-lg-0 align-items-center">
                 <li className="nav-item mb-3">
                   <Link to="/" onClick={navlinkClick}>
                     Home
