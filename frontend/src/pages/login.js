@@ -3,6 +3,8 @@ import axios from 'axios'
 import { useCookies } from 'react-cookie'
 import { useNavigate } from 'react-router-dom'
 
+import apiUrl from '../components/apiUrl'
+
 export const LoginPage = () => {
   return (
     <div className="auth">
@@ -22,7 +24,7 @@ const Login = () => {
   const onSubmit = async (event) => {
     event.preventDefault()
     try {
-      const response = await axios.post('http://localhost:5000/auth/login', {
+      const response = await axios.post(`${apiUrl}/auth/login`, {
         username,
         password,
       })

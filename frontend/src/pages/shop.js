@@ -3,6 +3,7 @@ import axios from 'axios'
 import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 
 import { useGetUserID } from '../hooks/useGetUserID.js'
+import apiUrl from '../components/apiUrl'
 
 export const Shop = () => {
   return (
@@ -18,7 +19,7 @@ const ProductTable = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await axios.get('http://localhost:5000/products')
+        const response = await axios.get(`${apiUrl}/products`)
         setProducts(response.data)
       } catch (err) {
         console.error(err)
@@ -38,10 +39,10 @@ const ProductTable = () => {
           alert('Please log in to add items to the cart.')
           return
         }
-        const response = await axios.post(
-          'http://localhost:5000/products/cart',
-          { productId, userId }
-        )
+        const response = await axios.post(`${apiUrl}/products/cart`, {
+          productId,
+          userId,
+        })
         setMessage(response.data.message)
         const cartID = localStorage.getItem('cartID')
         if (cartID === null || cartID === 'null') {
@@ -60,7 +61,7 @@ const ProductTable = () => {
           placement="top"
           overlay={<Tooltip id="tooltip">{message}</Tooltip>}
         >
-          <button className="btn card-link" onClick={handleClick}>
+          <button className="btn-black card-link" onClick={handleClick}>
             Add to Cart
           </button>
         </OverlayTrigger>
@@ -77,32 +78,11 @@ const ProductTable = () => {
           </div>
         </div>
       </div>
-      {/* <div className="container row row-cols-1 row-cols-md-3 g-4">
-        {product.map((product) => (
-          <div className="col">
-            <div className="card">
-              <img
-                src={product.imageURL}
-                className="card-img-top"
-                alt={product.name}
-              />
-              <div className="card-body">
-                <h5 className="card-title">{product.name}</h5>
-                <p className="card-text">{product.description}</p>
-                <div className="d-flex justify-content-between align-items-center">
-                  <span className="fw-bold">PHP{product.price}</span>
-                  <AddToCartButton productId={product._id} userId={userId} />
-                </div>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div> */}
       <div className="container">
         <div className="row">
           {product.map((product) => (
             <div className="col-lg-3 col-md-3 my-2">
-              <div className="Card w-auto p-2">
+              <div className="card card-shop w-auto p-2">
                 <div className="category-card">
                   <figure
                     className="d-flex justify-content-center card-banner img-holder"
@@ -114,17 +94,21 @@ const ProductTable = () => {
                       height="300"
                       loading="lazy"
                       alt={product.name}
-                      className="img-cover"
+                      className="img-shop"
                     />
                   </figure>
-                  <h4 className="card-title text-center">
+                  <p className="card-title text-center card-title-shop">
                     {product.name} <br />
                     <br />
-                  </h4>
-                  <div className="card-body">
-                    <div className="card-text text-center">
-                      <span>{product.description}</span>
-                      <p>PHP{product.price}</p>
+                  </p>
+                  <div className="card-body card-body-shop">
+                    <div className="card-text card-text-shop text-center">
+                      <p className="fst-italic mt-2 mb-0">
+                        {product.description}
+                      </p>
+                      <p className="fw-medium text-decoration-underline mb-1">
+                        PHP{product.price}
+                      </p>
                       <AddToCartButton
                         productId={product._id}
                         userId={userId}

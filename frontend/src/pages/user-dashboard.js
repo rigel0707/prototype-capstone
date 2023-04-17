@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react'
 import { Button, Modal, Form } from 'react-bootstrap'
+import { useNavigate } from 'react-router-dom'
+import { useCookies } from 'react-cookie'
 import axios from 'axios'
+
 import { useGetUserID } from '../hooks/useGetUserID'
 import apiUrl from '../components/apiUrl'
 
@@ -9,9 +12,11 @@ export const User = () => {
 
   return (
     <>
-      <h1>User Dashboard</h1>
-      <UserProfile userId={userId} />
-      <OrderTable userId={userId} />
+      <div className="container">
+        <h1>User Dashboard</h1>
+        <UserProfile userId={userId} />
+        <OrderTable userId={userId} />
+      </div>
     </>
   )
 }
@@ -22,9 +27,7 @@ const OrderTable = ({ userId }) => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await axios.get(
-          `http://localhost:5000/products/order/${userId}`
-        )
+        const response = await axios.get(`${apiUrl}/products/order/${userId}`)
         setOrders(response.data)
       } catch (err) {
         console.error(err)
@@ -114,9 +117,7 @@ const UserProfile = ({ userId }) => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await axios.get(
-          `http://localhost:5000/auth/users/${userId}`
-        )
+        const response = await axios.get(`${apiUrl}/auth/users/${userId}`)
         setUserData(response.data)
       } catch (err) {
         console.error(err)
@@ -128,9 +129,7 @@ const UserProfile = ({ userId }) => {
   useEffect(() => {
     async function fetchOrders() {
       try {
-        const response = await axios.get(
-          `http://localhost:5000/products/users/orders`
-        )
+        const response = await axios.get(`${apiUrl}/products/users/orders`)
         const userOrders = response.data.filter((order) => order._id === userId)
         const numOrders = userOrders.reduce((totalOrders, currentOrder) => {
           return totalOrders + currentOrder.numOrders
@@ -146,9 +145,7 @@ const UserProfile = ({ userId }) => {
   useEffect(() => {
     async function fetchCartItems() {
       try {
-        const response = await axios.get(
-          `http://localhost:5000/products/cart/${userId}`
-        )
+        const response = await axios.get(`${apiUrl}/products/cart/${userId}`)
         const cartItemsLength = response.data.cartItems.length
         setCartItemCount(cartItemsLength)
       } catch (err) {
@@ -163,6 +160,7 @@ const UserProfile = ({ userId }) => {
       <div className="container row g-3 mt-3 mb-6 mx-3">
         <h2 className="mt-3 mb-5">Profile</h2>
         <EditButton userId={userId} />
+        <DeleteAccountButton userId={userId} />
         <div className="container mt-2 col-8">
           <div className="card h-100">
             <div className="card-body">
@@ -208,13 +206,13 @@ const UserProfile = ({ userId }) => {
           <div className="card h-100" style={{ border: 'none' }}>
             <div className="card-body">
               <h4
-                className="mb-3 lh-sm lh-xl-1"
+                className="mb-3 lh-sm lh-xl-1 user-cart"
                 style={{ position: 'absolute', bottom: '50%' }}
               >
                 Cart Items: {cartItemCount}
               </h4>
               <h4
-                className="mb-3 lh-sm lh-xl-1"
+                className="mb-3 lh-sm lh-xl-1 user-order"
                 style={{ position: 'absolute', bottom: '0%' }}
               >
                 Total Orders: {orderCount}
@@ -234,9 +232,7 @@ const EditButton = ({ userId }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:5000/auth/users/${userId}`
-        )
+        const response = await axios.get(`${apiUrl}/auth/users/${userId}`)
         setEditFormData(response.data)
       } catch (err) {
         console.error(err)
@@ -249,7 +245,7 @@ const EditButton = ({ userId }) => {
     e.preventDefault()
     try {
       const response = await axios.put(
-        `http://localhost:5000/auth/users/${userId}`,
+        `${apiUrl}/auth/users/${userId}`,
         editFormData
       )
       console.log(response.data)
@@ -269,7 +265,9 @@ const EditButton = ({ userId }) => {
 
   return (
     <div>
-      <button onClick={() => setShowEditModal(true)}>Edit</button>
+      <button className="btn btn-info" onClick={() => setShowEditModal(true)}>
+        Edit
+      </button>
       <Modal show={showEditModal} onHide={() => setShowEditModal(false)}>
         <Modal.Header closeButton>
           <Modal.Title>Edit Profile</Modal.Title>
@@ -333,5 +331,70 @@ const EditButton = ({ userId }) => {
         </Modal.Body>
       </Modal>
     </div>
+  )
+}
+
+const DeleteAccountButton = ({ userId }) => {
+  const [cookies, setCookies] = useCookies(['access_token'])
+  const [showConfirmation, setShowConfirmation] = useState(false)
+
+  const navigate = useNavigate()
+
+  const handleDeleteAccount = async () => {
+    try {
+      await axios.delete(`${apiUrl}/auth/users/${userId}`)
+      setShowConfirmation(false)
+      logout()
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  const handleCancel = () => {
+    setShowConfirmation(false)
+  }
+
+  const handleConfirmation = () => {
+    setShowConfirmation(true)
+  }
+
+  const logout = () => {
+    setCookies('access_token', '')
+    window.localStorage.removeItem('userID')
+    window.localStorage.removeItem('sessionToken')
+    window.localStorage.removeItem('username')
+    window.localStorage.removeItem('cartID')
+    window.localStorage.removeItem('cartItems')
+    navigate('/')
+  }
+
+  return (
+    <>
+      <div>
+        <Button variant="danger" onClick={handleConfirmation}>
+          Delete Account
+        </Button>
+        <Modal
+          show={showConfirmation}
+          onHide={() => setShowConfirmation(false)}
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>Confirm Account Deletion</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            Are you sure you want to delete your account? This action cannot be
+            undone.
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleCancel}>
+              Cancel
+            </Button>
+            <Button variant="danger" onClick={handleDeleteAccount}>
+              Delete Account
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      </div>
+    </>
   )
 }

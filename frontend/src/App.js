@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.css'
 import { Home } from './pages/home'
 import { LoginPage } from './pages/login'
-import { AddProduct } from './pages/add-product'
 import { Cart } from './pages/cart'
 import { Navbar } from './components/navbar'
 import { Footer } from './components/footer'
@@ -24,7 +23,6 @@ function App() {
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/dashboard" element={<User />} />
-          <Route path="/add" element={<AddProduct />} />
           <Route path="/shop" element={<Shop />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />
