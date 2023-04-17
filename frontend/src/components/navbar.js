@@ -62,8 +62,9 @@ export const Navbar = () => {
             </h5>
           </a>
           <div
-            className={`offcanvas offcanvas-start ${showOffcanvas ? 'show' : ''
-              }`}
+            className={`offcanvas offcanvas-start ${
+              showOffcanvas ? 'show' : ''
+            }`}
             tabIndex="-1"
             id="offcanvasNavbar"
             aria-labelledby="offcanvasNavbarLabel"
@@ -77,7 +78,12 @@ export const Navbar = () => {
                   aria-label="Close"
                 ></button>
               </div>
-              <img src={logo} className="col-6" width="150px" alt="FuzzyJARR"></img>
+              <img
+                src={logo}
+                className="col-6"
+                width="150px"
+                alt="FuzzyJARR"
+              ></img>
             </div>
             <div className="offcanvas-body" id="navbarTogglerDemo03">
               <ul className="navbar-nav align-items-center ms-auto mb-3 mb-lg-0 align-items-center">
@@ -108,7 +114,7 @@ export const Navbar = () => {
                 {isAdmin && (
                   <li className="nav-item dropdown">
                     <button
-                      className="btn btn-primary dropdown-toggle"
+                      className="btn btn-black mx-1 dropdown-toggle"
                       type="button"
                       id="dashboardDropdown"
                       data-bs-toggle="dropdown"
@@ -166,7 +172,7 @@ export const Navbar = () => {
                   </>
                 ) : (
                   <button
-                    className="btn btn-primary"
+                    className="btn btn-black mx-1"
                     onClick={() => {
                       logout()
                       setShowOffcanvas(false)

@@ -56,7 +56,11 @@ export const Cart = () => {
       <div className="container">
         <h2 className="mt-3 mb-5">Cart Items</h2>
         {isLoading ? (
-          <p>Loading...</p>
+          <div className="d-flex justify-content-center">
+            <div className="spinner-border" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </div>
+          </div>
         ) : cartItems.length > 0 ? (
           <div className="container row g-5">
             <div className="col-12">

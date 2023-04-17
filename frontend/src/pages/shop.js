@@ -61,7 +61,7 @@ const ProductTable = () => {
           placement="top"
           overlay={<Tooltip id="tooltip">{message}</Tooltip>}
         >
-          <button className="btn card-link" onClick={handleClick}>
+          <button className="btn-black card-link" onClick={handleClick}>
             Add to Cart
           </button>
         </OverlayTrigger>
@@ -97,14 +97,16 @@ const ProductTable = () => {
                       className="img-shop"
                     />
                   </figure>
-                  <h4 className="card-title text-center">
+                  <p className="card-title text-center card-title-shop">
                     {product.name} <br />
                     <br />
-                  </h4>
+                  </p>
                   <div className="card-body card-body-shop">
                     <div className="card-text card-text-shop text-center">
-                      <span className="fst-italic">{product.description}</span>
-                      <p className="fw-medium text-decoration-underline">
+                      <p className="fst-italic mt-2 mb-0">
+                        {product.description}
+                      </p>
+                      <p className="fw-medium text-decoration-underline mb-1">
                         PHP{product.price}
                       </p>
                       <AddToCartButton

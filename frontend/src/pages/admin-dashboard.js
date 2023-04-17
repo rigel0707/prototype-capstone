@@ -541,7 +541,10 @@ const OrderTable = () => {
           <option value="Delivered">Delivered</option>
           <option value="Cancelled">Cancelled</option>
         </select>
-        <button onClick={() => handleStatusChange(order._id, newStatus)}>
+        <button
+          className="btn btn-secondary mt-1"
+          onClick={() => handleStatusChange(order._id, newStatus)}
+        >
           Change
         </button>
       </div>
