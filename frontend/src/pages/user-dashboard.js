@@ -3,6 +3,7 @@ import { Button, Modal, Form } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import { useCookies } from 'react-cookie'
 import axios from 'axios'
+
 import { useGetUserID } from '../hooks/useGetUserID'
 import apiUrl from '../components/apiUrl'
 
@@ -11,9 +12,11 @@ export const User = () => {
 
   return (
     <>
-      <h1>User Dashboard</h1>
-      <UserProfile userId={userId} />
-      <OrderTable userId={userId} />
+      <div className="container">
+        <h1>User Dashboard</h1>
+        <UserProfile userId={userId} />
+        <OrderTable userId={userId} />
+      </div>
     </>
   )
 }
@@ -24,9 +27,7 @@ const OrderTable = ({ userId }) => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await axios.get(
-          `http://localhost:5000/products/order/${userId}`
-        )
+        const response = await axios.get(`${apiUrl}/products/order/${userId}`)
         setOrders(response.data)
       } catch (err) {
         console.error(err)
@@ -116,9 +117,7 @@ const UserProfile = ({ userId }) => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await axios.get(
-          `http://localhost:5000/auth/users/${userId}`
-        )
+        const response = await axios.get(`${apiUrl}/auth/users/${userId}`)
         setUserData(response.data)
       } catch (err) {
         console.error(err)
@@ -130,9 +129,7 @@ const UserProfile = ({ userId }) => {
   useEffect(() => {
     async function fetchOrders() {
       try {
-        const response = await axios.get(
-          `http://localhost:5000/products/users/orders`
-        )
+        const response = await axios.get(`${apiUrl}/products/users/orders`)
         const userOrders = response.data.filter((order) => order._id === userId)
         const numOrders = userOrders.reduce((totalOrders, currentOrder) => {
           return totalOrders + currentOrder.numOrders
@@ -148,9 +145,7 @@ const UserProfile = ({ userId }) => {
   useEffect(() => {
     async function fetchCartItems() {
       try {
-        const response = await axios.get(
-          `http://localhost:5000/products/cart/${userId}`
-        )
+        const response = await axios.get(`${apiUrl}/products/cart/${userId}`)
         const cartItemsLength = response.data.cartItems.length
         setCartItemCount(cartItemsLength)
       } catch (err) {
@@ -211,13 +206,13 @@ const UserProfile = ({ userId }) => {
           <div className="card h-100" style={{ border: 'none' }}>
             <div className="card-body">
               <h4
-                className="mb-3 lh-sm lh-xl-1"
+                className="mb-3 lh-sm lh-xl-1 user-cart"
                 style={{ position: 'absolute', bottom: '50%' }}
               >
                 Cart Items: {cartItemCount}
               </h4>
               <h4
-                className="mb-3 lh-sm lh-xl-1"
+                className="mb-3 lh-sm lh-xl-1 user-order"
                 style={{ position: 'absolute', bottom: '0%' }}
               >
                 Total Orders: {orderCount}
@@ -237,9 +232,7 @@ const EditButton = ({ userId }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:5000/auth/users/${userId}`
-        )
+        const response = await axios.get(`${apiUrl}/auth/users/${userId}`)
         setEditFormData(response.data)
       } catch (err) {
         console.error(err)
@@ -252,7 +245,7 @@ const EditButton = ({ userId }) => {
     e.preventDefault()
     try {
       const response = await axios.put(
-        `http://localhost:5000/auth/users/${userId}`,
+        `${apiUrl}/auth/users/${userId}`,
         editFormData
       )
       console.log(response.data)
@@ -349,7 +342,7 @@ const DeleteAccountButton = ({ userId }) => {
 
   const handleDeleteAccount = async () => {
     try {
-      await axios.delete(`http://localhost:5000/auth/users/${userId}`)
+      await axios.delete(`${apiUrl}/auth/users/${userId}`)
       setShowConfirmation(false)
       logout()
     } catch (err) {

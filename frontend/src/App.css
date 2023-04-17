@@ -150,7 +150,7 @@ p {
 
 .offcanvas-title {
   font-family: 'Carter One', cursive;
-  font-size: 40px;
+  font-size: 25px;
 }
 
 .navbar-nav li a {
@@ -196,17 +196,17 @@ p {
     font-size: 150px;
   }
 }
-.content-title-span{
+.content-title-span {
   color: rgb(240, 104, 66);
 }
-.product-image{
-  width: 285px;
-  height: 285px;
+.product-image {
+  width: auto;
+  height: 150px;
 }
 .product-link {
   color: black;
   text-decoration: none;
-  font-size: 20px;
+  font-size: 14px;
   font-weight: 500;
 }
 .product-link:is(:hover, :focus) {
@@ -217,38 +217,36 @@ p {
   font-size: 20px;
   font-weight: 500;
 }
-.service-logo{
+.service-logo {
   width: 35%;
 }
-.service-text{
-  width: 300px;
+.service-text {
+  /* width: 300px; */
   color: rgb(153, 153, 153);
 }
 .bi {
   color: rgb(240, 104, 66);
 }
-.cat-banner{
+.cat-banner {
   width: 100%;
   background-repeat: no-repeat;
   background-size: cover;
 }
-.cat-banner-image{
+.cat-banner-image {
   width: 55%;
-  objectFit: cover;
+  object-fit: cover;
 }
-.cat-banner-text{
+.cat-banner-text {
   color: white;
   font-size: 20px;
   text-shadow: 1px 1px 2px #000000;
 }
-.cat-banner-title{
+.cat-banner-title {
   font-size: 40px;
 }
-.brand-image{
+.brand-image {
   width: 15%;
 }
-
-
 
 .footer-bottom {
   padding-block: 9px;
@@ -258,6 +256,7 @@ p {
   display: flex;
   flex-direction: column;
   position: relative;
+  min-height: calc(70vh - 50px);
 }
 
 .footer-bottom {
@@ -302,4 +301,73 @@ p {
 .img-order {
   width: 300px;
   height: auto;
+}
+
+.img-order {
+  max-width: 100%;
+  width: 385px;
+  height: auto;
+}
+
+@media (max-width: 425px) {
+  .img-order {
+    width: 290px;
+  }
+}
+
+.img-shop {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.card-shop {
+  min-height: 460px;
+  height: 460px;
+}
+
+.card-body-shop {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+.card-text-shop span {
+  font-size: 14px;
+}
+
+.card-text-shop p {
+  font-size: 15px;
+}
+
+.user-cart,
+.user-order {
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+.banner {
+  min-height: 360px;
+  background-position: left;
+  text-align: center;
+}
+
+.banner-title .span {
+  font-size: 50px;
+}
+
+.banner-text {
+  color: white;
+  margin-block: 15px 25px;
+}
+
+.banner .btn {
+  margin-inline: auto;
+}
+
+.banner .btn:is(:hover, :focus) {
+  background-color: rgb(240, 104, 66);
 }

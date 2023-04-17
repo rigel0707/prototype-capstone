@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react'
 import { Button, Modal, Form } from 'react-bootstrap'
 import axios from 'axios'
 
+import apiUrl from '../components/apiUrl'
+
 export const AdminDashboard = () => {
   return (
     <>
@@ -57,11 +59,9 @@ const UserTable = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const usersResponse = await axios.get(
-          'http://localhost:5000/auth/users'
-        )
+        const usersResponse = await axios.get(`${apiUrl}/auth/users`)
         const ordersResponse = await axios.get(
-          'http://localhost:5000/products/users/orders'
+          `${apiUrl}/products/users/orders`
         )
 
         // Combine the users data with the order counts data
@@ -175,7 +175,7 @@ const ProductTable = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await axios.get('http://localhost:5000/products')
+        const response = await axios.get(`${apiUrl}/products`)
         setProducts(response.data)
       } catch (err) {
         console.error(err)
@@ -187,10 +187,15 @@ const ProductTable = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/products/${id}`)
-      setProducts((prevProducts) =>
-        prevProducts.filter((product) => product._id !== id)
+      const confirmDelete = window.confirm(
+        'Are you sure you want to delete this product?'
       )
+      if (confirmDelete) {
+        await axios.delete(`${apiUrl}/products/${id}`)
+        setProducts((prevProducts) =>
+          prevProducts.filter((product) => product._id !== id)
+        )
+      }
     } catch (err) {
       console.error(err)
     }
@@ -231,7 +236,7 @@ const ProductTable = () => {
     const onSubmit = async (event) => {
       event.preventDefault()
       try {
-        await axios.post('http://localhost:5000/products', product)
+        await axios.post(`${apiUrl}/products`, product)
         alert('Product Added!')
         setProducts((prevProducts) => [...prevProducts, product])
         setIsOpen(false)
@@ -278,7 +283,11 @@ const ProductTable = () => {
                   onChange={handleChange}
                 />
               </Form.Group>
-              <Button variant="primary" type="submit">
+              <Button
+                variant="primary"
+                type="submit"
+                style={{ marginTop: '10px' }}
+              >
                 Add Product
               </Button>
             </Form>
@@ -288,105 +297,6 @@ const ProductTable = () => {
     )
   }
 
-  // const EditProductModal = ({ id, onClose }) => {
-  //   const [isOpen, setIsOpen] = useState(true)
-  //   const [product, setProduct] = useState(null)
-
-  //   useEffect(() => {
-  //     const getProduct = async () => {
-  //       try {
-  //         const response = await axios.get(
-  //           `http://localhost:5000/products/prod/${id}`
-  //         )
-  //         setProduct(response.data)
-  //       } catch (err) {
-  //         console.error(err)
-  //       }
-  //     }
-  //     getProduct()
-  //   }, [id])
-
-  //   const handleChange = (event) => {
-  //     const { name, value } = event.target
-  //     setProduct((prevProduct) => ({ ...prevProduct, [name]: value }))
-  //   }
-
-  //   const handleSubmit = async (event) => {
-  //     event.preventDefault()
-  //     try {
-  //       await axios.put(`http://localhost:5000/products/${id}`, product)
-  //       alert('Product Updated!')
-  //       onClose()
-  //     } catch (err) {
-  //       console.error(err)
-  //     }
-  //   }
-
-  //   const handleClose = () => {
-  //     setIsOpen(false)
-  //     onClose()
-  //   }
-
-  //   if (!product) {
-  //     return null
-  //   }
-
-  //   return (
-  //     <>
-  //       <Button onClick={() => setIsOpen(true)}>Edit Product</Button>
-
-  //       <Modal show={isOpen} onHide={handleClose}>
-  //         <Modal.Header closeButton>
-  //           <Modal.Title>Edit Product</Modal.Title>
-  //         </Modal.Header>
-  //         <Modal.Body>
-  //           <Form onSubmit={handleSubmit}>
-  //             <Form.Group>
-  //               <Form.Label>Name</Form.Label>
-  //               <Form.Control
-  //                 type="text"
-  //                 name="name"
-  //                 value={product.name}
-  //                 onChange={handleChange}
-  //               />
-  //             </Form.Group>
-  //             <Form.Group>
-  //               <Form.Label>Description</Form.Label>
-  //               <Form.Control
-  //                 type="text"
-  //                 name="description"
-  //                 value={product.description}
-  //                 onChange={handleChange}
-  //               />
-  //             </Form.Group>
-  //             <Form.Group>
-  //               <Form.Label>Image URL</Form.Label>
-  //               <Form.Control
-  //                 type="text"
-  //                 name="imageURL"
-  //                 value={product.imageURL}
-  //                 onChange={handleChange}
-  //               />
-  //             </Form.Group>
-  //             <Form.Group>
-  //               <Form.Label>Price</Form.Label>
-  //               <Form.Control
-  //                 type="number"
-  //                 name="price"
-  //                 value={product.price}
-  //                 onChange={handleChange}
-  //               />
-  //             </Form.Group>
-  //             <Button variant="primary" type="submit">
-  //               Update Product
-  //             </Button>
-  //           </Form>
-  //         </Modal.Body>
-  //       </Modal>
-  //     </>
-  //   )
-  // }
-
   const EditProductModal = ({ productId, onUpdate }) => {
     const [showEditModal, setShowEditModal] = useState(false)
     const [editFormData, setEditFormData] = useState({})
@@ -395,7 +305,7 @@ const ProductTable = () => {
       const fetchData = async () => {
         try {
           const response = await axios.get(
-            `http://localhost:5000/products/items/${productId}`
+            `${apiUrl}/products/items/${productId}`
           )
           setEditFormData(response.data)
         } catch (err) {
@@ -409,7 +319,7 @@ const ProductTable = () => {
       e.preventDefault()
       try {
         const response = await axios.put(
-          `http://localhost:5000/products/${productId}`,
+          `${apiUrl}/products/${productId}`,
           editFormData
         )
 
@@ -588,7 +498,7 @@ const OrderTable = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await axios.get('http://localhost:5000/products/order')
+        const response = await axios.get(`${apiUrl}/products/order`)
         setOrders(response.data)
       } catch (err) {
         console.error(err)
@@ -602,10 +512,9 @@ const OrderTable = () => {
 
   const handleStatusChange = async (orderId, newStatus) => {
     try {
-      const response = await axios.put(
-        `http://localhost:5000/products/order/${orderId}`,
-        { status: newStatus }
-      )
+      const response = await axios.put(`${apiUrl}/products/order/${orderId}`, {
+        status: newStatus,
+      })
       if (response.status === 200) {
         const updatedOrders = orders.map((order) =>
           order._id === orderId ? { ...order, status: newStatus } : order
