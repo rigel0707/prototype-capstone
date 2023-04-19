@@ -20,6 +20,7 @@ body {
   align-items: center;
   background-color: #f2f2f2;
   flex-direction: column;
+  margin-top: 15px;
 }
 
 .auth-container {
@@ -413,7 +414,7 @@ p {
 .form1 {
   height: 40px;
   text-align: center;
-  width: 75px;
+  width: 100px;
   margin: auto;
   /* padding: 20px;
   padding-top: 5px; */
@@ -423,6 +424,7 @@ p {
   background: linear-gradient(-135deg, #c85050, #d0a041);
   margin-top: 10px;
   color: white;
+  font-size: 14px;
 }
 label {
   position: absolute;
