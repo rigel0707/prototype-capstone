@@ -6,6 +6,7 @@ import StripeCheckout from 'react-stripe-checkout'
 import { useGetUserID } from '../hooks/useGetUserID'
 
 import logo from '../assets/images/logo.png'
+import apiUrl from '../components/apiUrl'
 
 export const Checkout = () => {
   const [cartItems, setCartItems] = useState([])
@@ -29,14 +30,11 @@ export const Checkout = () => {
   useEffect(() => {
     const makeRequest = async () => {
       try {
-        const response = await axios.post(
-          'http://localhost:5000/payment/stripe',
-          {
-            tokenId: stripeToken.id,
-            amount:
-              cartItems.reduce((total, item) => total + item.price, 0) * 100,
-          }
-        )
+        const response = await axios.post(`${apiUrl}/payment/stripe`, {
+          tokenId: stripeToken.id,
+          amount:
+            cartItems.reduce((total, item) => total + item.price, 0) * 100,
+        })
         console.log(response.data)
         handlePlaceOrder()
       } catch (err) {
@@ -50,7 +48,7 @@ export const Checkout = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/products/checkout?userId=${userID}`
+          `${apiUrl}/products/checkout?userId=${userID}`
         )
         const data = response.data
         setCartItems(data.cartItems)
@@ -67,18 +65,15 @@ export const Checkout = () => {
 
   const handlePlaceOrder = async () => {
     try {
-      const response = await axios.post(
-        `http://localhost:5000/products/order`,
-        {
-          userId: userID,
-          cartItems: cartItems,
-          name: name,
-          address: address,
-          phone: phone,
-          email: email,
-          status: 'pending',
-        }
-      )
+      const response = await axios.post(`${apiUrl}/products/order`, {
+        userId: userID,
+        cartItems: cartItems,
+        name: name,
+        address: address,
+        phone: phone,
+        email: email,
+        status: 'pending',
+      })
       const orderId = response.data.order._id
       window.localStorage.setItem('orderId', orderId)
 
