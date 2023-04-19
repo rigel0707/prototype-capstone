@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
-
+import dotenv from 'dotenv'
+import StripeCheckout from 'react-stripe-checkout'
 import { useGetUserID } from '../hooks/useGetUserID'
-import apiUrl from '../components/apiUrl'
+
+import logo from '../assets/images/logo.png'
 
 export const Checkout = () => {
   const [cartItems, setCartItems] = useState([])
@@ -11,15 +13,44 @@ export const Checkout = () => {
   const [address, setAddress] = useState('')
   const [phone, setPhone] = useState('')
   const [email, setEmail] = useState('')
+  const [stripeToken, setStripeToken] = useState(null)
 
   const navigate = useNavigate()
   const userID = useGetUserID()
+
+  dotenv.config()
+
+  const key = process.env.STRIPE_CLIENT_KEY
+
+  const onToken = (token) => {
+    setStripeToken(token)
+  }
+
+  useEffect(() => {
+    const makeRequest = async () => {
+      try {
+        const response = await axios.post(
+          'http://localhost:5000/payment/stripe',
+          {
+            tokenId: stripeToken.id,
+            amount:
+              cartItems.reduce((total, item) => total + item.price, 0) * 100,
+          }
+        )
+        console.log(response.data)
+        handlePlaceOrder()
+      } catch (err) {
+        console.error(err)
+      }
+    }
+    makeRequest()
+  }, [stripeToken])
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `${apiUrl}/products/checkout?userId=${userID}`
+          `http://localhost:5000/products/checkout?userId=${userID}`
         )
         const data = response.data
         setCartItems(data.cartItems)
@@ -36,15 +67,18 @@ export const Checkout = () => {
 
   const handlePlaceOrder = async () => {
     try {
-      const response = await axios.post(`${apiUrl}/products/order`, {
-        userId: userID,
-        cartItems: cartItems,
-        name: name,
-        address: address,
-        phone: phone,
-        email: email,
-        status: 'pending',
-      })
+      const response = await axios.post(
+        `http://localhost:5000/products/order`,
+        {
+          userId: userID,
+          cartItems: cartItems,
+          name: name,
+          address: address,
+          phone: phone,
+          email: email,
+          status: 'pending',
+        }
+      )
       const orderId = response.data.order._id
       window.localStorage.setItem('orderId', orderId)
 
@@ -213,9 +247,19 @@ export const Checkout = () => {
           </div>
           <div className="row g-2 mb-5 mb-lg-0">
             <div className="col-md col-lg d-grid">
-              <button className="btn btn-primary" onClick={handlePlaceOrder}>
-                Place Order
-              </button>
+              <StripeCheckout
+                name="FuzzyJARR"
+                description="All-Around Petshop"
+                image={logo}
+                amount={
+                  cartItems.reduce((total, item) => total + item.price, 0) * 100
+                }
+                currency="PHP"
+                token={onToken}
+                stripeKey={key}
+              >
+                <button className="btn btn-primary">Place Order</button>
+              </StripeCheckout>
             </div>
           </div>
         </div>

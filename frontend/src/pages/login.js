@@ -52,8 +52,13 @@ const Login = () => {
         label="Login"
         onSubmit={onSubmit}
       />
-      <p>New Customer?</p>
-      <button onClick={() => navigate('/register')}>Create new account</button>
+
+      <div class="signup-link">
+        Not a member?{' '}
+        <a href="#" onClick={() => navigate('/register')}>
+          Signup now
+        </a>
+      </div>
     </>
   )
 }
@@ -67,34 +72,30 @@ const Form = ({
   onSubmit,
 }) => {
   return (
-    <div className="auth-container">
+    <div className="wrapper">
+      <div class="title">{label}</div>
       <form onSubmit={onSubmit}>
-        <h2>{label}</h2>
-        <div className="form-group">
-          <label className="form-label" htmlFor="username">
-            Username:
-          </label>
+        <div className="field">
           <input
-            className="form-control"
             type="text"
             id="username"
             value={username}
             onChange={(event) => setUsername(event.target.value)}
           />
+          <label htmlFor="username">Username</label>
         </div>
-        <div className="form-group">
-          <label className="form-label" htmlFor="password">
-            Password:
-          </label>
+        <div className="field">
           <input
-            className="form-control"
             type="password"
             id="password"
             value={password}
             onChange={(event) => setPassword(event.target.value)}
           />
+          <label htmlFor="password">Password:</label>
         </div>
-        <button type="submit"> {label} </button>
+        <div class="field">
+          <input type="submit" value="Log In" />
+        </div>
       </form>
     </div>
   )

@@ -6,6 +6,7 @@ import bodyParser from 'body-parser'
 
 import { userRouter } from './routes/users.js'
 import { productRouter } from './routes/products.js'
+import { paymentRouter } from './routes/payments.js'
 
 dotenv.config()
 
@@ -19,6 +20,7 @@ app.use(bodyParser.json())
 
 app.use('/auth', userRouter)
 app.use('/products', productRouter)
+app.use('/payment', paymentRouter)
 
 app.get('/', (req, res) => {
   const imageUrl =

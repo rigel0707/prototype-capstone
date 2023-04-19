@@ -44,74 +44,80 @@ const Register = () => {
     }
   }
   return (
-    <div className="auth-container">
+    <div className="wrapper">
       <form onSubmit={onSubmit}>
-        <h2>Register</h2>
-        <div className="form-group">
-          <label htmlFor="username"> Username: </label>
+        <div class="title">Register</div>
+        <div className="field">
           <input
             type="text"
             id="username"
             value={username}
             onChange={(event) => setUsername(event.target.value)}
           />
+          <label htmlFor="username"> Username </label>
         </div>
-        <div className="form-group">
-          <label htmlFor="password"> Password: </label>
+        <div className="field">
           <input
             type="password"
             id="password"
             value={password}
             onChange={(event) => setPassword(event.target.value)}
           />
+          <label htmlFor="password"> Password </label>
         </div>
-        <div className="form-group">
-          <label htmlFor="firstName"> First Name: </label>
+        <div className="field">
           <input
             type="text"
             id="firstName"
             value={firstName}
             onChange={(event) => setFirstName(event.target.value)}
           />
+          <label htmlFor="firstName"> First Name: </label>
         </div>
-        <div className="form-group">
-          <label htmlFor="lastName"> Last Name: </label>
+        <div className="field">
           <input
             type="text"
             id="lastName"
             value={lastName}
             onChange={(event) => setLastName(event.target.value)}
           />
+          <label htmlFor="lastName"> Last Name: </label>
         </div>
-        <div className="form-group">
-          <label htmlFor="address"> Address: </label>
+
+        <div className="field">
           <input
             type="text"
             id="address"
             value={address}
             onChange={(event) => setAddress(event.target.value)}
           />
+          <label htmlFor="address"> Address: </label>
         </div>
-        <div className="form-group">
-          <label htmlFor="email"> Email: </label>
+        <div className="field">
           <input
             type="text"
             id="email"
             value={email}
             onChange={(event) => setEmail(event.target.value)}
           />
+          <label htmlFor="email"> Email: </label>
         </div>
-        <div className="form-group">
-          <label htmlFor="phone"> Phone: </label>
+        <div className="field">
           <input
             type="text"
             id="phone"
             value={phone}
             onChange={(event) => setPhone(event.target.value)}
           />
+          <label htmlFor="phone"> Phone: </label>
         </div>
-        <button type="submit">Register</button>
-        <button onClick={() => navigate('/login')}>Back to Login</button>
+
+        <button type="submit" className="form1" value="Register">
+          Register
+        </button>
+        <button className="form1" onClick={() => navigate('/login')}>
+          Back to Login
+        </button>
       </form>
     </div>
   )
