@@ -348,7 +348,7 @@ p {
 
 .img-shop {
   height: 100%;
-  width: 100%;
+  width: 200px;
   object-fit: cover;
 }
 
@@ -424,7 +424,13 @@ p {
 }
 
 .desc-price {
-  height: 145px;
+  height: 170px;
+}
+
+@media (max-width: 991px) {
+  li.nav-item {
+    padding-bottom: 10px;
+  }
 }
 
 .form1 {
