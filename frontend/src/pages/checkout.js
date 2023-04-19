@@ -239,7 +239,7 @@ export const Checkout = () => {
             </div>
           </div>
           <div className="row g-2 mb-5 mb-lg-0">
-            <div className="col-md col-lg d-grid">
+            <div className="col-md col-lg d-grid justify-content-end">
               <StripeCheckout
                 name="FuzzyJARR"
                 description="All-Around Petshop"
