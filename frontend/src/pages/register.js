@@ -111,13 +111,14 @@ const Register = () => {
           />
           <label htmlFor="phone"> Phone: </label>
         </div>
-
-        <button type="submit" className="form1" value="Register">
-          Register
-        </button>
-        <button className="form1" onClick={() => navigate('/login')}>
-          Back to Login
-        </button>
+        <div className="container d-flex justify-content-center">
+          <button type="submit" className="form1" value="Register">
+            Register
+          </button>
+          <button className="form1" onClick={() => navigate('/login')}>
+            Back to Login
+          </button>
+        </div>
       </form>
     </div>
   )
