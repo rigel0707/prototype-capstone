@@ -284,8 +284,10 @@ p {
 .footer {
   display: flex;
   flex-direction: column;
-  position: relative;
-  min-height: calc(70vh - 50px);
+  position: fixed;
+  /* min-height: calc(70vh - 50px); */
+  bottom: 0;
+  width: 100%;
 }
 
 .footer-bottom {
@@ -406,9 +408,23 @@ p {
   color: black;
 }
 
+.card-link {
+  position: absolute;
+  bottom: 2em;
+  left: 0;
+  right: 0;
+  max-width: 170px;
+  margin: 0 auto;
+  padding: 0.5em;
+}
+
 .card-title-shop {
   font-size: 15px;
   font-weight: bold;
+}
+
+.desc-price {
+  height: 145px;
 }
 
 .form1 {

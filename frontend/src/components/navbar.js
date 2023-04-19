@@ -87,24 +87,24 @@ export const Navbar = () => {
             </div>
             <div className="offcanvas-body" id="navbarTogglerDemo03">
               <ul className="navbar-nav align-items-center ms-auto mb-3 mb-lg-0 align-items-center">
-                <li className="nav-item mb-3">
+                <li className="nav-item">
                   <Link to="/" onClick={navlinkClick}>
                     Home
                   </Link>
                 </li>
-                <li className="nav-item mb-3">
+                <li className="nav-item">
                   <Link to="/shop" onClick={navlinkClick}>
                     Shop
                   </Link>
                 </li>
-                <li className="nav-item mb-3">
+                <li className="nav-item">
                   {(isAdmin || isUser) && (
                     <Link to="/cart" onClick={navlinkClick}>
                       Cart
                     </Link>
                   )}
                 </li>
-                <li className="nav-item mb-3">
+                <li className="nav-item">
                   {isUser && (
                     <Link to="/dashboard" onClick={navlinkClick}>
                       Dashboard
