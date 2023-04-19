@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
-
+import StripeCheckout from 'react-stripe-checkout'
 import { useGetUserID } from '../hooks/useGetUserID'
+
+import logo from '../assets/images/logo.png'
 import apiUrl from '../components/apiUrl'
 
 export const Checkout = () => {
@@ -11,9 +13,34 @@ export const Checkout = () => {
   const [address, setAddress] = useState('')
   const [phone, setPhone] = useState('')
   const [email, setEmail] = useState('')
+  const [stripeToken, setStripeToken] = useState(null)
 
   const navigate = useNavigate()
   const userID = useGetUserID()
+
+  const key =
+    'pk_test_51MySr8LrGV3bGy5meCvZVa4wIORExNmCdNYN9J20E263AxFOY2q95ifR8szy6REcFWFhgd2ZdyY9fs9LGBvuFKER00eogwtZ2i'
+
+  const onToken = (token) => {
+    setStripeToken(token)
+  }
+
+  useEffect(() => {
+    const makeRequest = async () => {
+      try {
+        const response = await axios.post(`${apiUrl}/payment/stripe`, {
+          tokenId: stripeToken.id,
+          amount:
+            cartItems.reduce((total, item) => total + item.price, 0) * 100,
+        })
+        console.log(response.data)
+        handlePlaceOrder()
+      } catch (err) {
+        console.error(err)
+      }
+    }
+    makeRequest()
+  }, [stripeToken])
 
   useEffect(() => {
     const fetchData = async () => {
@@ -213,9 +240,19 @@ export const Checkout = () => {
           </div>
           <div className="row g-2 mb-5 mb-lg-0">
             <div className="col-md col-lg d-grid">
-              <button className="btn btn-primary" onClick={handlePlaceOrder}>
-                Place Order
-              </button>
+              <StripeCheckout
+                name="FuzzyJARR"
+                description="All-Around Petshop"
+                image={logo}
+                amount={
+                  cartItems.reduce((total, item) => total + item.price, 0) * 100
+                }
+                currency="PHP"
+                token={onToken}
+                stripeKey={key}
+              >
+                <button className="btn btn-primary">Place Order</button>
+              </StripeCheckout>
             </div>
           </div>
         </div>
