@@ -78,7 +78,7 @@ const ProductTable = () => {
           </div>
         </div>
       </div>
-      <div className="container">
+      <div className="container mb-5">
         <div className="row">
           {product.map((product) => (
             <div className="col-lg-3 col-md-3 my-2">
@@ -103,12 +103,14 @@ const ProductTable = () => {
                   </p>
                   <div className="card-body card-body-shop">
                     <div className="card-text card-text-shop text-center">
-                      <p className="fst-italic mt-2 mb-0">
-                        {product.description}
-                      </p>
-                      <p className="fw-medium text-decoration-underline mb-1">
-                        PHP{product.price}
-                      </p>
+                      <div className="desc-price">
+                        <p className="fst-italic mt-2 mb-0">
+                          {product.description}
+                        </p>
+                        <p className="fw-medium text-decoration-underline mb-1">
+                          PHP{product.price}
+                        </p>
+                      </div>
                       <AddToCartButton
                         productId={product._id}
                         userId={userId}
