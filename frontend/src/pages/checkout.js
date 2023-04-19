@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
-import dotenv from 'dotenv'
 import StripeCheckout from 'react-stripe-checkout'
 import { useGetUserID } from '../hooks/useGetUserID'
 
@@ -19,9 +18,8 @@ export const Checkout = () => {
   const navigate = useNavigate()
   const userID = useGetUserID()
 
-  dotenv.config()
-
-  const key = process.env.STRIPE_CLIENT_KEY
+  const key =
+    'pk_test_51MySr8LrGV3bGy5meCvZVa4wIORExNmCdNYN9J20E263AxFOY2q95ifR8szy6REcFWFhgd2ZdyY9fs9LGBvuFKER00eogwtZ2i'
 
   const onToken = (token) => {
     setStripeToken(token)
