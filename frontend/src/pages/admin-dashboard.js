@@ -1,16 +1,16 @@
 import { useState, useEffect } from 'react'
 import { Button, Modal, Form } from 'react-bootstrap'
 import axios from 'axios'
-
 import apiUrl from '../components/apiUrl'
 
 export const AdminDashboard = () => {
   return (
     <>
-      <div className="container row justify-content-center mt-5">
-        <div className="col-sm-12 col-md-3 col-lg-3">
-          <ul className="nav nav-pills nav-fill flex-column">
-            <li className="nav-item hover">
+      <div className="container">
+      <h1 className='mt-5'><span className='content-title-span'>Admin</span> Dashboard</h1>
+        <div className="row dashboard-pill">
+          <ul className="nav nav-pills nav-fill col-12 my-5">
+            <li className="nav-item hover mx-1">
               <a
                 href="#customers"
                 className="nav-link active"
@@ -19,19 +19,19 @@ export const AdminDashboard = () => {
                 Customers
               </a>
             </li>
-            <li className="nav-item hover">
+            <li className="nav-item hover mx-1">
               <a href="#products" className="nav-link" data-bs-toggle="tab">
                 Products
               </a>
             </li>
-            <li className="nav-item hover">
+            <li className="nav-item hover mx-1">
               <a href="#orders" className="nav-link" data-bs-toggle="tab">
                 Orders
               </a>
             </li>
           </ul>
         </div>
-        <div className="tab-content col-9 mb-5">
+        <div className="tab-content col-12 mb-5">
           <div className="tab-pane fade show active" id="customers">
             <div className="container">
               <UserTable />
@@ -59,7 +59,9 @@ const UserTable = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const usersResponse = await axios.get(`${apiUrl}/auth/users`)
+        const usersResponse = await axios.get(
+          `${apiUrl}/auth/users`
+        )
         const ordersResponse = await axios.get(
           `${apiUrl}/products/users/orders`
         )
@@ -187,15 +189,10 @@ const ProductTable = () => {
 
   const handleDelete = async (id) => {
     try {
-      const confirmDelete = window.confirm(
-        'Are you sure you want to delete this product?'
+      await axios.delete(`${apiUrl}/products/${id}`)
+      setProducts((prevProducts) =>
+        prevProducts.filter((product) => product._id !== id)
       )
-      if (confirmDelete) {
-        await axios.delete(`${apiUrl}/products/${id}`)
-        setProducts((prevProducts) =>
-          prevProducts.filter((product) => product._id !== id)
-        )
-      }
     } catch (err) {
       console.error(err)
     }
@@ -283,11 +280,7 @@ const ProductTable = () => {
                   onChange={handleChange}
                 />
               </Form.Group>
-              <Button
-                variant="primary"
-                type="submit"
-                style={{ marginTop: '10px' }}
-              >
+              <Button className='mt-3' variant="primary" type="submit">
                 Add Product
               </Button>
             </Form>
@@ -296,6 +289,105 @@ const ProductTable = () => {
       </>
     )
   }
+
+  // const EditProductModal = ({ id, onClose }) => {
+  //   const [isOpen, setIsOpen] = useState(true)
+  //   const [product, setProduct] = useState(null)
+
+  //   useEffect(() => {
+  //     const getProduct = async () => {
+  //       try {
+  //         const response = await axios.get(
+  //           `http://localhost:5000/products/prod/${id}`
+  //         )
+  //         setProduct(response.data)
+  //       } catch (err) {
+  //         console.error(err)
+  //       }
+  //     }
+  //     getProduct()
+  //   }, [id])
+
+  //   const handleChange = (event) => {
+  //     const { name, value } = event.target
+  //     setProduct((prevProduct) => ({ ...prevProduct, [name]: value }))
+  //   }
+
+  //   const handleSubmit = async (event) => {
+  //     event.preventDefault()
+  //     try {
+  //       await axios.put(`http://localhost:5000/products/${id}`, product)
+  //       alert('Product Updated!')
+  //       onClose()
+  //     } catch (err) {
+  //       console.error(err)
+  //     }
+  //   }
+
+  //   const handleClose = () => {
+  //     setIsOpen(false)
+  //     onClose()
+  //   }
+
+  //   if (!product) {
+  //     return null
+  //   }
+
+  //   return (
+  //     <>
+  //       <Button onClick={() => setIsOpen(true)}>Edit Product</Button>
+
+  //       <Modal show={isOpen} onHide={handleClose}>
+  //         <Modal.Header closeButton>
+  //           <Modal.Title>Edit Product</Modal.Title>
+  //         </Modal.Header>
+  //         <Modal.Body>
+  //           <Form onSubmit={handleSubmit}>
+  //             <Form.Group>
+  //               <Form.Label>Name</Form.Label>
+  //               <Form.Control
+  //                 type="text"
+  //                 name="name"
+  //                 value={product.name}
+  //                 onChange={handleChange}
+  //               />
+  //             </Form.Group>
+  //             <Form.Group>
+  //               <Form.Label>Description</Form.Label>
+  //               <Form.Control
+  //                 type="text"
+  //                 name="description"
+  //                 value={product.description}
+  //                 onChange={handleChange}
+  //               />
+  //             </Form.Group>
+  //             <Form.Group>
+  //               <Form.Label>Image URL</Form.Label>
+  //               <Form.Control
+  //                 type="text"
+  //                 name="imageURL"
+  //                 value={product.imageURL}
+  //                 onChange={handleChange}
+  //               />
+  //             </Form.Group>
+  //             <Form.Group>
+  //               <Form.Label>Price</Form.Label>
+  //               <Form.Control
+  //                 type="number"
+  //                 name="price"
+  //                 value={product.price}
+  //                 onChange={handleChange}
+  //               />
+  //             </Form.Group>
+  //             <Button variant="primary" type="submit">
+  //               Update Product
+  //             </Button>
+  //           </Form>
+  //         </Modal.Body>
+  //       </Modal>
+  //     </>
+  //   )
+  // }
 
   const EditProductModal = ({ productId, onUpdate }) => {
     const [showEditModal, setShowEditModal] = useState(false)
@@ -402,7 +494,7 @@ const ProductTable = () => {
   return (
     <>
       <div className="row g-3 mb-4">
-        <div className="col-auto">
+        <div className="col-auto d-flex">
           <h2 className="mb-0">Products</h2>
           <div className="container">
             <AddProductModal />
@@ -448,13 +540,20 @@ const ProductTable = () => {
                 >
                   PRICE
                 </th>
+                <th
+                  className="sort align-middle ps-4"
+                  scope="col"
+                  data-sort="vendor"
+                  style={{ width: '200px' }}
+                >
+                </th>
               </tr>
             </thead>
             <tbody className="list" id="products-table-body">
               {product.map((product) => (
                 <tr className="position-static" key={product._id}>
                   <td className="align-middle white-space-nowrap py-0">
-                    <div className="border rounded-2">
+                    <div className="border rounded-2 m-2">
                       <img src={product.imageURL} alt={product.name} />
                     </div>
                   </td>
@@ -470,17 +569,19 @@ const ProductTable = () => {
                   <td className="price align-middle white-space-nowrap fw-bold text-700 ps-4">
                     PHP {product.price}
                   </td>
-                  <td>
-                    <button
-                      className="btn btn-danger"
-                      onClick={() => handleDelete(product._id)}
-                    >
-                      Delete
-                    </button>
-                    <EditProductModal
-                      productId={product._id}
-                      onUpdate={handleProductUpdate}
-                    />
+                  <td className='align-middle white-space-nowrap'>
+                    <div className='d-flex align-items-center'>
+                      <button
+                        className="btn btn-danger me-3"
+                        onClick={() => handleDelete(product._id)}
+                      >
+                        Delete
+                      </button>
+                      <EditProductModal
+                        productId={product._id}
+                        onUpdate={handleProductUpdate}
+                      />
+                    </div>
                   </td>
                 </tr>
               ))}
@@ -512,9 +613,10 @@ const OrderTable = () => {
 
   const handleStatusChange = async (orderId, newStatus) => {
     try {
-      const response = await axios.put(`${apiUrl}/products/order/${orderId}`, {
-        status: newStatus,
-      })
+      const response = await axios.put(
+        `${apiUrl}/products/order/${orderId}`,
+        { status: newStatus }
+      )
       if (response.status === 200) {
         const updatedOrders = orders.map((order) =>
           order._id === orderId ? { ...order, status: newStatus } : order
@@ -530,7 +632,7 @@ const OrderTable = () => {
 
   const renderStatusDropdown = (order) => {
     return (
-      <div>
+      <div className='d-flex'>
         <select
           value={newStatus}
           onChange={(e) => setNewStatus(e.target.value)}
@@ -541,10 +643,7 @@ const OrderTable = () => {
           <option value="Delivered">Delivered</option>
           <option value="Cancelled">Cancelled</option>
         </select>
-        <button
-          className="btn btn-secondary mt-1"
-          onClick={() => handleStatusChange(order._id, newStatus)}
-        >
+        <button className='btn btn-primary mx-2' onClick={() => handleStatusChange(order._id, newStatus)}>
           Change
         </button>
       </div>

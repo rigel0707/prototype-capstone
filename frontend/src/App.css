@@ -119,6 +119,14 @@ p {
 .btn-orange {
   background-color: rgb(240, 104, 66);
 }
+.btn-primary {
+  background-color: rgb(240, 104, 66) !important;
+  border-style: none !important;
+}
+.btn-primary:is(:hover, :focus) {
+  background-color: black !important;
+  color: white !important;
+}
 .btn-black:is(:hover, :focus) {
   background-color: rgb(240, 104, 66) !important;
   color: black !important;
@@ -246,6 +254,26 @@ p {
 }
 .brand-image {
   width: 15%;
+}
+
+/* USER-DASHBOARD */
+.dashboard-text{
+  font-size: large !important;
+}
+.dashboard-email{
+  color: #292a2e;
+  text-decoration: none;
+}
+.admin-dashboard {
+  width: 100% !important;
+}
+.container .dashboard-pill .nav .nav-item .nav-link {
+  color: whitesmoke;
+  background-color: #292a2e;
+  font-weight: bold;
+}
+.container .dashboard-pill .nav .nav-item .active {
+  background-color: #e08c59;
 }
 
 .footer-bottom {
