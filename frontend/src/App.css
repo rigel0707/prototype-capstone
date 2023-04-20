@@ -244,9 +244,9 @@ p {
   object-fit: cover;
 }
 .cat-banner-text {
-  color: white;
+  color: black;
   font-size: 20px;
-  text-shadow: 1px 1px 2px #000000;
+  text-shadow: 1px 1px 2px whitesmoke;
 }
 .cat-banner-title {
   font-size: 40px;
@@ -439,6 +439,7 @@ p {
   text-align: center;
   width: 100px;
   margin: auto;
+  margin-bottom: 15px;
   /* padding: 20px;
   padding-top: 5px; */
   border: 1px solid #ccc;
@@ -466,6 +467,7 @@ label {
 }
 .wrapper {
   margin: 0;
+  margin-bottom: 70px;
   padding: 0;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -493,12 +495,15 @@ label {
   background: linear-gradient(-135deg, #c85050, #d0a041);
 }
 .wrapper form {
-  padding: 10px 30px 50px 30px;
+  /* padding: 10px 30px 50px 30px; */
 }
 .wrapper form .field {
   height: 50px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  padding-left: 15px;
+  padding-right: 15px;
   width: 100%;
-  margin-top: 20px;
   position: relative;
 }
 .wrapper form .field input {
@@ -656,15 +661,19 @@ form .signup-link a:hover {
     font-size: 18px;
   }
 }
-@media (min-width: 321px) {
+@media (min-width: 426px) {
   .btn .delete-btn-icon {
     display: none
 
   }
 }
-@media (max-width: 320px) {
+@media (max-width: 425px) {
   .btn .delete-btn-text {
     display: none
+  }
+  .edit-btn {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
   }
   .delete-btn {
     padding-left: 15px !important;
