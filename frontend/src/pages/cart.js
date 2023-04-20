@@ -53,12 +53,15 @@ export const Cart = () => {
 
   return (
     <>
-      <div className="container">
+      <div className="container-fluid px-0">
         {isLoading ? (
           <p>Loading...</p>
         ) : cartItems.length > 0 ? (
           <>
-            <section class="mb-4 py-4" style={{ backgroundColor: '#ff894bbf' }}>
+            <section
+              class="mt-3 mb-4 py-4"
+              style={{ backgroundColor: '#ff894bbf' }}
+            >
               <div class="container h-100">
                 <div class="row d-flex justify-content-center align-items-center h-100">
                   <div class="col">
