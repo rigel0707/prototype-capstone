@@ -22,15 +22,16 @@ export const Home = () => {
         style={{ backgroundImage: `url(${banner})` }}
       >
         <div className="container">
-          <h1 className="h1 banner-title">
-            <span className="span">High Quality</span> Pet Essentials
-          </h1>
-
-          <p className="banner-text">Sale up to 50% off on selected items</p>
-
-          <Link to="/shop" className="btn btn-black">
+          <div className='banner-content row mt-5'>
+            <h1 className="h1 banner-title col-12">
+              <span className="span">High Quality<br></br>
+              </span> Pet Essentials
+            </h1>
+            <p className="banner-text col-12">Sale up to 50% off on selected items</p>
+            <Link to="/shop" className="btn btn-black">
             Shop Now!
           </Link>
+          </div>
         </div>
       </section>
       <section className="trending-items mb-5">
