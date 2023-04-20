@@ -495,9 +495,10 @@ label.authform {
   border-radius: 15px 15px 0 0;
   background: linear-gradient(-135deg, #c85050, #d0a041);
 }
-.wrapper form {
-  /* padding: 10px 30px 50px 30px; */
-}
+/* .wrapper form {
+  padding: 10px 30px 50px 30px;
+} */
+
 .wrapper form .field {
   height: 50px;
   margin-top: 15px;

@@ -83,7 +83,7 @@ export const Checkout = () => {
   }
 
   return (
-    <div className="container">
+    <div className="container mb-3 pb-3">
       <h2 className="mt-3 mb-5">Check out</h2>
       <div className="row justify-content-between">
         <div className="col-lg-7 col-xl-7">
