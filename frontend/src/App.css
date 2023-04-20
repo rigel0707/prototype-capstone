@@ -450,7 +450,8 @@ p {
   color: white;
   font-size: 14px;
 }
-label {
+
+label.authform {
   position: absolute;
   top: 50%;
   left: 20px;
@@ -663,13 +664,12 @@ form .signup-link a:hover {
 }
 @media (min-width: 426px) {
   .btn .delete-btn-icon {
-    display: none
-
+    display: none;
   }
 }
 @media (max-width: 425px) {
   .btn .delete-btn-text {
-    display: none
+    display: none;
   }
   .edit-btn {
     padding-left: 15px !important;
@@ -680,6 +680,5 @@ form .signup-link a:hover {
     padding-right: 15px !important;
   }
 }
-
 
 @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
