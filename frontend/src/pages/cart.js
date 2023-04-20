@@ -58,7 +58,7 @@ export const Cart = () => {
           <p>Loading...</p>
         ) : cartItems.length > 0 ? (
           <>
-            <section class="py-4" style={{ backgroundColor: '#ff894bbf' }}>
+            <section class="mb-4 py-4" style={{ backgroundColor: '#ff894bbf' }}>
               <div class="container h-100">
                 <div class="row d-flex justify-content-center align-items-center h-100">
                   <div class="col">
