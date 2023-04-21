@@ -54,7 +54,10 @@ const Register = () => {
             value={username}
             onChange={(event) => setUsername(event.target.value)}
           />
-          <label htmlFor="username"> Username </label>
+          <label className="authform" htmlFor="username">
+            {' '}
+            Username{' '}
+          </label>
         </div>
         <div className="field">
           <input
@@ -63,7 +66,10 @@ const Register = () => {
             value={password}
             onChange={(event) => setPassword(event.target.value)}
           />
-          <label htmlFor="password"> Password </label>
+          <label className="authform" htmlFor="password">
+            {' '}
+            Password{' '}
+          </label>
         </div>
         <div className="field">
           <input
@@ -72,7 +78,10 @@ const Register = () => {
             value={firstName}
             onChange={(event) => setFirstName(event.target.value)}
           />
-          <label htmlFor="firstName"> First Name: </label>
+          <label className="authform" htmlFor="firstName">
+            {' '}
+            First Name:{' '}
+          </label>
         </div>
         <div className="field">
           <input
@@ -81,7 +90,10 @@ const Register = () => {
             value={lastName}
             onChange={(event) => setLastName(event.target.value)}
           />
-          <label htmlFor="lastName"> Last Name: </label>
+          <label className="authform" htmlFor="lastName">
+            {' '}
+            Last Name:{' '}
+          </label>
         </div>
 
         <div className="field">
@@ -91,7 +103,10 @@ const Register = () => {
             value={address}
             onChange={(event) => setAddress(event.target.value)}
           />
-          <label htmlFor="address"> Address: </label>
+          <label className="authform" htmlFor="address">
+            {' '}
+            Address:{' '}
+          </label>
         </div>
         <div className="field">
           <input
@@ -100,7 +115,10 @@ const Register = () => {
             value={email}
             onChange={(event) => setEmail(event.target.value)}
           />
-          <label htmlFor="email"> Email: </label>
+          <label className="authform" htmlFor="email">
+            {' '}
+            Email:{' '}
+          </label>
         </div>
         <div className="field">
           <input
@@ -109,7 +127,10 @@ const Register = () => {
             value={phone}
             onChange={(event) => setPhone(event.target.value)}
           />
-          <label htmlFor="phone"> Phone: </label>
+          <label className="authform" htmlFor="phone">
+            {' '}
+            Phone:{' '}
+          </label>
         </div>
         <div className="container d-flex justify-content-center">
           <button type="submit" className="form1" value="Register">

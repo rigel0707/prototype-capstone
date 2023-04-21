@@ -82,7 +82,9 @@ const Form = ({
             value={username}
             onChange={(event) => setUsername(event.target.value)}
           />
-          <label htmlFor="username">Username</label>
+          <label className="authform" htmlFor="username">
+            Username
+          </label>
         </div>
         <div className="field">
           <input
@@ -91,7 +93,9 @@ const Form = ({
             value={password}
             onChange={(event) => setPassword(event.target.value)}
           />
-          <label htmlFor="password">Password:</label>
+          <label className="authform" htmlFor="password">
+            Password:
+          </label>
         </div>
         <div class="field">
           <input type="submit" value="Log In" />

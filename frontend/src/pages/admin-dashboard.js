@@ -6,8 +6,10 @@ import apiUrl from '../components/apiUrl'
 export const AdminDashboard = () => {
   return (
     <>
-      <div className="container">
-      <h1 className='mt-5'><span className='content-title-span'>Admin</span> Dashboard</h1>
+      <div className="container mb-3 pb-3">
+        <h1 className="mt-5">
+          <span className="content-title-span">Admin</span> Dashboard
+        </h1>
         <div className="row dashboard-pill">
           <ul className="nav nav-pills nav-fill col-12 my-5">
             <li className="nav-item hover mx-1">
@@ -59,9 +61,7 @@ const UserTable = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const usersResponse = await axios.get(
-          `${apiUrl}/auth/users`
-        )
+        const usersResponse = await axios.get(`${apiUrl}/auth/users`)
         const ordersResponse = await axios.get(
           `${apiUrl}/products/users/orders`
         )
@@ -93,7 +93,7 @@ const UserTable = () => {
           <h2 className="mb-0">Customers</h2>
         </div>
       </div>
-      <div className="container mx-n4 px-4 mx-lg-n6 px-lg-6 bg-white border-top border-bottom border-200 position-relative top-1">
+      <div className="container mb-3 pb-3 px-4 mx-lg-n6 px-lg-6 bg-white border-top border-bottom border-200 position-relative top-1">
         <div className="table-responsive scrollbar mx-n1 px-1">
           <table className="table table-striped fs--1 mb-0">
             <thead>
@@ -280,7 +280,7 @@ const ProductTable = () => {
                   onChange={handleChange}
                 />
               </Form.Group>
-              <Button className='mt-3' variant="primary" type="submit">
+              <Button className="mt-3" variant="primary" type="submit">
                 Add Product
               </Button>
             </Form>
@@ -289,105 +289,6 @@ const ProductTable = () => {
       </>
     )
   }
-
-  // const EditProductModal = ({ id, onClose }) => {
-  //   const [isOpen, setIsOpen] = useState(true)
-  //   const [product, setProduct] = useState(null)
-
-  //   useEffect(() => {
-  //     const getProduct = async () => {
-  //       try {
-  //         const response = await axios.get(
-  //           `http://localhost:5000/products/prod/${id}`
-  //         )
-  //         setProduct(response.data)
-  //       } catch (err) {
-  //         console.error(err)
-  //       }
-  //     }
-  //     getProduct()
-  //   }, [id])
-
-  //   const handleChange = (event) => {
-  //     const { name, value } = event.target
-  //     setProduct((prevProduct) => ({ ...prevProduct, [name]: value }))
-  //   }
-
-  //   const handleSubmit = async (event) => {
-  //     event.preventDefault()
-  //     try {
-  //       await axios.put(`http://localhost:5000/products/${id}`, product)
-  //       alert('Product Updated!')
-  //       onClose()
-  //     } catch (err) {
-  //       console.error(err)
-  //     }
-  //   }
-
-  //   const handleClose = () => {
-  //     setIsOpen(false)
-  //     onClose()
-  //   }
-
-  //   if (!product) {
-  //     return null
-  //   }
-
-  //   return (
-  //     <>
-  //       <Button onClick={() => setIsOpen(true)}>Edit Product</Button>
-
-  //       <Modal show={isOpen} onHide={handleClose}>
-  //         <Modal.Header closeButton>
-  //           <Modal.Title>Edit Product</Modal.Title>
-  //         </Modal.Header>
-  //         <Modal.Body>
-  //           <Form onSubmit={handleSubmit}>
-  //             <Form.Group>
-  //               <Form.Label>Name</Form.Label>
-  //               <Form.Control
-  //                 type="text"
-  //                 name="name"
-  //                 value={product.name}
-  //                 onChange={handleChange}
-  //               />
-  //             </Form.Group>
-  //             <Form.Group>
-  //               <Form.Label>Description</Form.Label>
-  //               <Form.Control
-  //                 type="text"
-  //                 name="description"
-  //                 value={product.description}
-  //                 onChange={handleChange}
-  //               />
-  //             </Form.Group>
-  //             <Form.Group>
-  //               <Form.Label>Image URL</Form.Label>
-  //               <Form.Control
-  //                 type="text"
-  //                 name="imageURL"
-  //                 value={product.imageURL}
-  //                 onChange={handleChange}
-  //               />
-  //             </Form.Group>
-  //             <Form.Group>
-  //               <Form.Label>Price</Form.Label>
-  //               <Form.Control
-  //                 type="number"
-  //                 name="price"
-  //                 value={product.price}
-  //                 onChange={handleChange}
-  //               />
-  //             </Form.Group>
-  //             <Button variant="primary" type="submit">
-  //               Update Product
-  //             </Button>
-  //           </Form>
-  //         </Modal.Body>
-  //       </Modal>
-  //     </>
-  //   )
-  // }
 
   const EditProductModal = ({ productId, onUpdate }) => {
     const [showEditModal, setShowEditModal] = useState(false)
@@ -501,7 +402,7 @@ const ProductTable = () => {
           </div>
         </div>
       </div>
-      <div className="container mx-n4 px-4 mx-lg-n6 px-lg-6 bg-white border-top border-bottom border-200 position-relative top-1">
+      <div className="container mb-3 pb-3 px-4 mx-lg-n6 px-lg-6 bg-white border-top border-bottom border-200 position-relative top-1">
         <div className="table-responsive scrollbar mx-n1 px-1">
           <table className="table fs--1 mb-0">
             <thead>
@@ -545,8 +446,7 @@ const ProductTable = () => {
                   scope="col"
                   data-sort="vendor"
                   style={{ width: '200px' }}
-                >
-                </th>
+                ></th>
               </tr>
             </thead>
             <tbody className="list" id="products-table-body">
@@ -569,8 +469,8 @@ const ProductTable = () => {
                   <td className="price align-middle white-space-nowrap fw-bold text-700 ps-4">
                     PHP {product.price}
                   </td>
-                  <td className='align-middle white-space-nowrap'>
-                    <div className='d-flex align-items-center'>
+                  <td className="align-middle white-space-nowrap">
+                    <div className="d-flex align-items-center">
                       <button
                         className="btn btn-danger me-3"
                         onClick={() => handleDelete(product._id)}
@@ -613,10 +513,9 @@ const OrderTable = () => {
 
   const handleStatusChange = async (orderId, newStatus) => {
     try {
-      const response = await axios.put(
-        `${apiUrl}/products/order/${orderId}`,
-        { status: newStatus }
-      )
+      const response = await axios.put(`${apiUrl}/products/order/${orderId}`, {
+        status: newStatus,
+      })
       if (response.status === 200) {
         const updatedOrders = orders.map((order) =>
           order._id === orderId ? { ...order, status: newStatus } : order
@@ -632,7 +531,7 @@ const OrderTable = () => {
 
   const renderStatusDropdown = (order) => {
     return (
-      <div className='d-flex'>
+      <div className="d-flex">
         <select
           value={newStatus}
           onChange={(e) => setNewStatus(e.target.value)}
@@ -643,7 +542,10 @@ const OrderTable = () => {
           <option value="Delivered">Delivered</option>
           <option value="Cancelled">Cancelled</option>
         </select>
-        <button className='btn btn-primary mx-2' onClick={() => handleStatusChange(order._id, newStatus)}>
+        <button
+          className="btn btn-primary mx-2"
+          onClick={() => handleStatusChange(order._id, newStatus)}
+        >
           Change
         </button>
       </div>

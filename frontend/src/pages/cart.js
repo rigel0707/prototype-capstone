@@ -53,120 +53,129 @@ export const Cart = () => {
 
   return (
     <>
-      <div className="container">
-        <h2 className="mt-3 mb-5">Cart Items</h2>
+      <div className="container-fluid px-0">
         {isLoading ? (
-          <div className="d-flex justify-content-center">
-            <div className="spinner-border" role="status">
-              <span className="visually-hidden">Loading...</span>
-            </div>
-          </div>
+          <p>Loading...</p>
         ) : cartItems.length > 0 ? (
-          <div className="container row g-5">
-            <div className="col-12">
-              <div id="cartTable">
-                <div className="table-responsive scrollbar mx-n1 px-1">
-                  <table className="table fs--1 mb-0 border-top border-200">
-                    <thead>
-                      <tr>
-                        <th
-                          className="sort white-space-nowrap align-middle fs--2"
-                          scope="col"
-                        >
-                          Image
-                        </th>
-                        <th
-                          className="sort white-space-nowrap align-middle"
-                          scope="col"
-                          style={{ minWidth: '250px' }}
-                        >
-                          PRODUCTS
-                        </th>
-                        <th
-                          className="sort align-middle text-end"
-                          scope="col"
-                          style={{ width: '300px' }}
-                        >
-                          PRICE
-                        </th>
-                        <th
-                          className="sort align-middle text-end"
-                          scope="col"
-                          style={{ width: '250px' }}
-                        ></th>
-                      </tr>
-                    </thead>
-                    <tbody className="list" id="cart-table-body">
-                      {cartItems.map((item) => (
-                        <tr
-                          className="cart-table-row btn-reveal-trigger"
-                          key={`${item.productId}-${Math.random()}`}
-                        >
-                          <td className="align-middle white-space-nowrap py-0">
-                            <div className="border rounded-2">
+          <>
+            <section
+              class="mt-3 mb-4 py-4"
+              style={{ backgroundColor: '#ff894bbf' }}
+            >
+              <div class="container h-100">
+                <div class="row d-flex justify-content-center align-items-center h-100">
+                  <div class="col">
+                    <p>
+                      <span class="h2">Shopping Cart </span>
+                    </p>
+
+                    <div class="card mb-4">
+                      <div class="card-body p-4">
+                        {cartItems.map((item) => (
+                          <div
+                            class="row align-items-center mb-3"
+                            style={{ borderBottom: '1px solid black' }}
+                            key={`${item.productId}-${Math.random()}`}
+                          >
+                            <div class="col-md-3">
                               <img
                                 src={item.imageURL}
+                                class="img-fluid"
                                 alt={item.name}
-                                width="53"
                               />
                             </div>
-                          </td>
-                          <td className="products align-middle">
-                            {item.productName}
-                          </td>
+                            <div class="col-md-5 d-flex justify-content-center">
+                              <div>
+                                <p class="text-muted mb-1">Name</p>
+                                <p class="lead fw-normal mb-3">
+                                  {item.productName}
+                                </p>
+                              </div>
+                            </div>
 
-                          <td className="price align-middle text-900 fs--1 fw-semi-bold text-end">
-                            PHP {item.price}
-                          </td>
-                          <td className="align-middle white-space-nowrap text-end pe-0 ps-3">
-                            <button
-                              className="btn btn-secondary"
-                              onClick={() =>
-                                handleRemoveFromCart(item.productId)
-                              }
-                            >
-                              Remove from cart
-                            </button>
-                          </td>
-                        </tr>
-                      ))}
-                      <tr className="cart-table-row btn-reveal-trigger">
-                        <td className="text-start"></td>
-                        <td className="text-start"></td>
-                        <td className="text-start"></td>
-                        <td className="text-end fs-4">
-                          Total : PHP
-                          {cartItems.reduce(
-                            (total, item) => total + item.price,
-                            0
-                          )}
-                        </td>
-                      </tr>
-                      <tr className="cart-table-row btn-reveal-trigger">
-                        <td className="text-start"></td>
-                        <td className="text-start"></td>
-                        <td className="text-start"></td>
-                        <td className="text-end">
-                          {cartItems.length > 0 ? (
-                            <button
-                              className="btn btn-primary"
-                              onClick={() => navigate('/checkout')}
-                            >
-                              Checkout
-                            </button>
-                          ) : (
-                            <button disabled>Checkout</button>
-                          )}
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
+                            <div class="col-md-3 d-flex">
+                              <div>
+                                <p class="text-muted mb-1 pb-2">Price</p>
+                                <p class="lead fw-normal mb-0">
+                                  PHP {item.price}
+                                </p>
+                              </div>
+                            </div>
+                            <div class="col-md-1 col-lg-1 col-xl-1 mb-2 text-end">
+                              <a
+                                href="#!"
+                                class="text-danger"
+                                onClick={() =>
+                                  handleRemoveFromCart(item.productId)
+                                }
+                              >
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="30"
+                                  height="30"
+                                  fill="currentColor"
+                                  class="bi bi-trash"
+                                  viewBox="0 0 16 16"
+                                >
+                                  <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z" />
+                                  <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z" />
+                                </svg>
+                              </a>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div class="card mb-5">
+                      <div class="card-body p-4">
+                        <div class="float-end">
+                          <p class="mb-0 me-5 d-flex align-items-center">
+                            <span class="fw-semibold text-muted me-2">
+                              Order total:
+                            </span>{' '}
+                            <span class="lead fw-normal">
+                              PHP
+                              {cartItems.reduce(
+                                (total, item) => total + item.price,
+                                0
+                              )}
+                            </span>
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="d-flex justify-content-end">
+                      <button
+                        type="button"
+                        class="btn btn-light btn-lg me-2"
+                        onClick={() => navigate('/shop')}
+                      >
+                        Continue shopping
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-dark btn-lg"
+                        onClick={() => navigate('/checkout')}
+                      >
+                        Checkout
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
+            </section>
+          </>
         ) : (
-          <p className="alert alert-danger">Cart is Empty</p>
+          <div className="d-grid justify-content-center">
+            <p
+              className="d-flex justify-content-center alert alert-danger mt-5"
+              style={{ width: '250px' }}
+            >
+              Cart is Empty
+            </p>
+          </div>
         )}
       </div>
     </>
