@@ -4,7 +4,7 @@ import { useCookies } from 'react-cookie'
 import { useNavigate } from 'react-router-dom'
 import jwt_decode from 'jwt-decode'
 
-import logo from '../assets/images/logo.png'
+import logo from '../../assets/images/logo.png'
 
 export const Navbar = () => {
   const [cookies, setCookies] = useCookies(['access_token'])
