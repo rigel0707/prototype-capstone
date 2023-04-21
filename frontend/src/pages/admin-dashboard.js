@@ -1,4 +1,4 @@
-import { UserTable } from '../components/admin/userTable'
+import { UserTable } from '../components/admin/UserTable'
 import { ProductTable } from '../components/admin/ProductTable'
 import { OrderTable } from '../components/admin/OrderTable'
 
