@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 
-import apiUrl from '../components/apiUrl'
+import apiUrl from '../apiUrl'
 
 export const UserTable = () => {
   const [users, setUsers] = useState([])

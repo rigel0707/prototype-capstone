@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { Button, Modal, Form } from 'react-bootstrap'
 import axios from 'axios'
 
-import apiUrl from '../components/apiUrl'
+import apiUrl from '../apiUrl'
 
 export const ProductTable = () => {
   const [product, setProducts] = useState([])
