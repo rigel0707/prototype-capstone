@@ -2,9 +2,16 @@ KodeGo Capstone Project
 
 Fuzzy JARR
 
-Frontend: fuzzyjarr.vercel.app
+<details>
+ <summary>Links</summary>
+ 
+ ```javascript
+Frontend: https://fuzzyjarr.vercel.app
 
-Backend: capstone-api-ck6i.onrender.com
+Backend: https://capstone-api-ck6i.onrender.com
+```
+
+</details>
 
 
 Steps to Install and Run:
